@@ -3,7 +3,7 @@ PL MobileTesting IPR
 
 ## Run a test using
 
-```gradle clean -Dtest.single=IOSAlertTest test```
+```TODO```
 
 ## Мысли из собрания 14.02.2025
 Задвача написать фреймворк на Appium и UI Automator
