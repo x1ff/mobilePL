@@ -1,6 +1,10 @@
 # mobilePL
 PL MobileTesting IPR
 
+## Run a test using
+
+```gradle clean -Dtest.single=IOSAlertTest test```
+
 ## Мысли из собрания 14.02.2025
 Задвача написать фреймворк на Appium и UI Automator
 
@@ -23,3 +27,4 @@ https://developer.android.com/training/testing/other-components/ui-automator
 Инспектор для аппиума - https://github.com/appium/appium-inspector
 
 инспектор для UiAutomator (если не запустится тот uiautomatorviewer который входит в поставку студии) - https://github.com/tarcv/uiautomatorviewer-gradle
+
