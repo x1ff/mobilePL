@@ -2,8 +2,8 @@ package org.example;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +15,8 @@ public class BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class.getName());
     public static AndroidDriver driver = null;
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeAll
+    public static void setUp() throws IOException {
         LOGGER.info("Before test block start");
         String apkDir = System.getenv("APK_DIR");
         LOGGER.info("apk Dir: {}", apkDir);
