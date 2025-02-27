@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -32,10 +33,8 @@ public class Config {
 
     public static boolean loadConfig(String fileName) throws IOException {
         Properties prop = new Properties();
-        ClassLoader classLoader = Config.class.getClassLoader();
-        File configFile = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
-        try (FileInputStream fileInputStream = new FileInputStream(configFile)) {
-            prop.load(fileInputStream);
+        try (InputStream inputStream = Config.class.getClassLoader().getResourceAsStream(fileName)) {
+            prop.load(inputStream);
             udid = prop.getProperty("udid");
             appiumUrl = prop.getProperty("appiumUrl");
         } catch (IOException e) {
