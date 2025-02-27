@@ -20,7 +20,7 @@ public class Config {
     private static String appiumUrl;
 
 
-    private Config()  {
+    private Config() {
     }
 
     public static Config getConfig() throws IOException {
@@ -34,14 +34,12 @@ public class Config {
         Properties prop = new Properties();
         ClassLoader classLoader = Config.class.getClassLoader();
         File configFile = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
-        try {
-            prop.load(new FileInputStream(configFile));
-
+        try (FileInputStream fileInputStream = new FileInputStream(configFile)) {
+            prop.load(fileInputStream);
             udid = prop.getProperty("udid");
             appiumUrl = prop.getProperty("appiumUrl");
-
         } catch (IOException e) {
-            LOGGER.error("Ошибка при загрузке конфига " + e.getMessage());
+            LOGGER.error("Ошибка при загрузке конфига {}", e.getMessage());
             throw new IllegalStateException("Ошибка при загрузке конфига");
         }
         return true;
