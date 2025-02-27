@@ -52,11 +52,11 @@ public class Config {
         LOGGER.info("appiumUrl: " + appiumUrl);
     }
 
-    public String getUdid() {
+    public static String getUdid() {
         return udid;
     }
 
-    public String getAppiumUrl() {
+    public static String getAppiumUrl() {
         return appiumUrl;
     }
 }

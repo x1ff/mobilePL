@@ -28,12 +28,12 @@ public class BaseTest {
         }
 
         UiAutomator2Options options = new UiAutomator2Options()
-                .setUdid(Config.getConfig().getUdid())
+                .setUdid(Config.getUdid())
                 .setApp(apkDir);
 
         try {
             driver = new AndroidDriver(
-                    new URL(Config.getConfig().getAppiumUrl()), options
+                    new URL(Config.getAppiumUrl()), options
             );
         } catch (MalformedURLException e) {
             throw new MalformedURLException();
