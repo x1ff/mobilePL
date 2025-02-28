@@ -24,7 +24,7 @@ public class AppTest extends BaseTest {
         assertEquals(
                 EXPECTED_TEXT,
                 driver.findElement(LOGIN_BTN_BY).getText(),
-                String.format("У кнопки %s неправильный текст", EXPECTED_TEXT)
+                "У кнопки Войти неправильный текст"
         );
     }
 
@@ -36,7 +36,7 @@ public class AppTest extends BaseTest {
         assertEquals(
                 EXPECTED_TEXT,
                 driver.findElement(LOGIN_BTN_BY).getText(),
-                String.format("У кнопки %s неправильный текст", EXPECTED_TEXT)
+                "У кнопки Войти неправильный текст"
         );
     }
 }
