@@ -6,9 +6,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BaseTest {
@@ -30,14 +28,7 @@ public class BaseTest {
         UiAutomator2Options options = new UiAutomator2Options()
                 .setUdid(Config.getUdid())
                 .setApp(apkDir);
-
-        try {
-            driver = new AndroidDriver(
-                    new URL(Config.getAppiumUrl()), options
-            );
-        } catch (MalformedURLException e) {
-            throw new MalformedURLException();
-        }
+        driver = new AndroidDriver(new URL(Config.getAppiumUrl()), options);
     }
 
     @AfterAll
