@@ -5,7 +5,9 @@ package org.example;
 
 import com.codeborne.selenide.Selenide;
 
-import org.example.pages.LoginPage;
+import org.checkerframework.checker.units.qual.C;
+import org.example.screens.InfoAlert;
+import org.example.screens.LoginScreen;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +22,10 @@ public class AppTest extends BaseTest {
     public void checkTextBtn1Test() {
         LOGGER.info("checkTextBtn1 test start");
         final String EXPECTED_TEXT = "Войти";
-        LoginPage loginPage = Selenide.page(LoginPage.class);
+        LoginScreen loginScreen = Selenide.page(LoginScreen.class);
         assertEquals(
                 EXPECTED_TEXT,
-                loginPage.getLoginBtnText(),
+                loginScreen.getLoginBtnText(),
                 "У кнопки Войти неправильный текст"
         );
     }
@@ -31,10 +33,13 @@ public class AppTest extends BaseTest {
     @Test
     public void loginTest() {
         LOGGER.info("loginTest test start");
-        LoginPage loginPage = Selenide.page(LoginPage.class);
-        loginPage.typeUserName("user@pflb.ru");
-        loginPage.typePassword("user");
-        loginPage.clickToLoginBtn();
+        LoginScreen loginScreen = Selenide.page(LoginScreen.class);
+        loginScreen.typeUserName(Config.getUserLogin());
+        loginScreen.typePassword(Config.getUserPass());
+        loginScreen.clickToLoginBtn();
+        InfoAlert infoAlert = Selenide.page(InfoAlert.class);
+        assertEquals("Успешная авторизация!", infoAlert.getMsgText());
+        infoAlert.clickOkBtn();
     }
 
 }
