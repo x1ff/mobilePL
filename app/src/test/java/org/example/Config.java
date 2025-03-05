@@ -2,12 +2,8 @@ package org.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.Properties;
 
 public class Config {
@@ -24,7 +20,7 @@ public class Config {
     private Config() {
     }
 
-    public static Config getConfig() throws IOException {
+    public static Config getConfig() {
         if (Config.instance == null) {
             Config.instance = new Config();
         }
