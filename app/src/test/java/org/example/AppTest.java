@@ -5,7 +5,6 @@ package org.example;
 
 import com.codeborne.selenide.Selenide;
 
-import org.checkerframework.checker.units.qual.C;
 import org.example.screens.InfoAlert;
 import org.example.screens.LoginScreen;
 import org.junit.jupiter.api.Test;
@@ -33,13 +32,14 @@ public class AppTest extends BaseTest {
     @Test
     public void loginTest() {
         LOGGER.info("loginTest test start");
-        LoginScreen loginScreen = Selenide.page(LoginScreen.class);
-        loginScreen.typeUserName(Config.getUserLogin());
-        loginScreen.typePassword(Config.getUserPass());
-        loginScreen.clickToLoginBtn();
+        Selenide.page(LoginScreen.class)
+                .typeUserName(Config.getUserLogin())
+                .typePassword(Config.getUserPass())
+                .clickToLoginBtn();
         InfoAlert infoAlert = Selenide.page(InfoAlert.class);
         assertEquals("Успешная авторизация!", infoAlert.getMsgText());
         infoAlert.clickOkBtn();
+        infoAlert.checkDisappear();
     }
 
 }

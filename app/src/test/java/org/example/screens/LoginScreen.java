@@ -20,19 +20,29 @@ public class LoginScreen extends BaseScreen {
     public LoginScreen() {
 
     }
-    public void typeUserName(String name) {
-        $(userNameInput).shouldBe(visible).sendKeys(name);
+
+    @Override
+    public void checkScreenElements() {
+        userNameInput.shouldBe(visible);
+        passwordInput.shouldBe(visible);
+        loginBtn.shouldBe(visible);
     }
-    public void typePassword(String password) {
-        $(passwordInput).shouldBe(visible).sendKeys(password);
+
+    public LoginScreen typeUserName(String name) {
+        userNameInput.shouldBe(visible).sendKeys(name);
+        return this;
+    }
+    public LoginScreen typePassword(String password) {
+        passwordInput.shouldBe(visible).sendKeys(password);
+        return this;
     }
 
     public void clickToLoginBtn() {
-        $(loginBtn).shouldBe(visible).click(tap());
+        loginBtn.shouldBe(visible).click(tap());
     }
 
     public String getLoginBtnText() {
-        return $(loginBtn).shouldBe(visible).getText();
+        return loginBtn.shouldBe(visible).getText();
     }
 
     public UsersScreen auth(String login, String pass) {

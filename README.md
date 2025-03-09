@@ -17,6 +17,14 @@ PL MobileTesting IPR
 7. Нажимаем треугольник в идее
 8. TODO  переделать запуск командой
 
+## Appium inspector 
+````
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2"
+}
+````
+
 ## Мысли из собрания 14.02.2025
 Задвача написать фреймворк на Appium и UI Automator
 
@@ -40,3 +48,5 @@ https://developer.android.com/training/testing/other-components/ui-automator
 
 инспектор для UiAutomator (если не запустится тот uiautomatorviewer который входит в поставку студии) - https://github.com/tarcv/uiautomatorviewer-gradle
 
+Selenide-appium
+https://github.com/selenide/selenide/tree/main/modules/appium
