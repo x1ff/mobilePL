@@ -3,10 +3,11 @@
  */
 package org.example;
 
-import io.appium.java_client.AppiumBy;
+import com.codeborne.selenide.Selenide;
 
+import org.example.screens.InfoAlert;
+import org.example.screens.LoginScreen;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,26 +18,28 @@ public class AppTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AppTest.class.getName());
 
     @Test
-    public void checkTextBtn1() {
+    public void checkTextBtn1Test() {
         LOGGER.info("checkTextBtn1 test start");
         final String EXPECTED_TEXT = "Войти";
-        final By LOGIN_BTN_BY = AppiumBy.id("com.example.apppolygon:id/login");
+        LoginScreen loginScreen = Selenide.page(LoginScreen.class);
         assertEquals(
                 EXPECTED_TEXT,
-                driver.findElement(LOGIN_BTN_BY).getText(),
+                loginScreen.getLoginBtnText(),
                 "У кнопки Войти неправильный текст"
         );
     }
 
     @Test
-    public void checkTextBtn2() {
-        LOGGER.info("checkTextBtn2 test start");
-        final String EXPECTED_TEXT = "Войти";
-        final By LOGIN_BTN_BY = AppiumBy.id("com.example.apppolygon:id/login");
-        assertEquals(
-                EXPECTED_TEXT,
-                driver.findElement(LOGIN_BTN_BY).getText(),
-                "У кнопки Войти неправильный текст"
-        );
+    public void loginTest() {
+        LOGGER.info("loginTest test start");
+        Selenide.page(LoginScreen.class)
+                .typeUserName(Config.getUserLogin())
+                .typePassword(Config.getUserPass())
+                .clickToLoginBtn();
+        InfoAlert infoAlert = Selenide.page(InfoAlert.class);
+        assertEquals("Успешная авторизация!", infoAlert.getMsgText());
+        infoAlert.clickOkBtn();
+        infoAlert.checkDisappear();
     }
+
 }

@@ -56,3 +56,5 @@ apk
 # idea
 .idea
 app/out
+# properties with auth data
+app/src/test/resources/application-local.properties

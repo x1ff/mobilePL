@@ -2,12 +2,8 @@ package org.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.Properties;
 
 public class Config {
@@ -20,11 +16,12 @@ public class Config {
     private static String udid;
     private static String appiumUrl;
 
-
+    private static String userLogin;
+    private static String userPass;
     private Config() {
     }
 
-    public static Config getConfig() throws IOException {
+    public static Config getConfig() {
         if (Config.instance == null) {
             Config.instance = new Config();
         }
@@ -37,6 +34,8 @@ public class Config {
             prop.load(inputStream);
             udid = prop.getProperty("udid");
             appiumUrl = prop.getProperty("appiumUrl");
+            userLogin = prop.getProperty("userLogin");
+            userPass = prop.getProperty("userPassword");
         } catch (IOException e) {
             LOGGER.error("Ошибка при загрузке конфига {}", e.getMessage());
             throw new IllegalStateException("Ошибка при загрузке конфига");
@@ -47,6 +46,8 @@ public class Config {
     public static void logConfig() {
         LOGGER.info("udid: " + udid);
         LOGGER.info("appiumUrl: " + appiumUrl);
+        LOGGER.info("userLogin: " + userLogin);
+        LOGGER.info("userPassword: " + userPass);
     }
 
     public static String getUdid() {
@@ -55,5 +56,13 @@ public class Config {
 
     public static String getAppiumUrl() {
         return appiumUrl;
+    }
+
+    public static String getUserLogin() {
+        return userLogin;
+    }
+
+    public static String getUserPass() {
+        return userPass;
     }
 }
