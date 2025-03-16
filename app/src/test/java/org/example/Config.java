@@ -44,10 +44,10 @@ public class Config {
     }
 
     public static void logConfig() {
-        LOGGER.info("udid: " + udid);
-        LOGGER.info("appiumUrl: " + appiumUrl);
-        LOGGER.info("userLogin: " + userLogin);
-        LOGGER.info("userPassword: " + userPass);
+        LOGGER.info("udid: {}", udid);
+        LOGGER.info("appiumUrl: {}", appiumUrl);
+        LOGGER.info("userLogin: {}", userLogin);
+        LOGGER.info("userPassword: {}", userPass);
     }
 
     public static String getUdid() {

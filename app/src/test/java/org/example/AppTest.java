@@ -3,10 +3,8 @@
  */
 package org.example;
 
-import com.codeborne.selenide.Selenide;
-
-import org.example.screens.InfoAlert;
-import org.example.screens.LoginScreen;
+import org.example.robots.InfoAlertRobot;
+import org.example.robots.LoginRobot;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,25 +19,21 @@ public class AppTest extends BaseTest {
     public void checkTextBtn1Test() {
         LOGGER.info("checkTextBtn1 test start");
         final String EXPECTED_TEXT = "Войти";
-        LoginScreen loginScreen = Selenide.page(LoginScreen.class);
         assertEquals(
                 EXPECTED_TEXT,
-                loginScreen.getLoginBtnText(),
+                new LoginRobot().getLoginBtnText(),
                 "У кнопки Войти неправильный текст"
         );
+        LOGGER.info("checkTextBtn1 end");
     }
 
     @Test
     public void loginTest() {
         LOGGER.info("loginTest test start");
-        Selenide.page(LoginScreen.class)
-                .typeUserName(Config.getUserLogin())
-                .typePassword(Config.getUserPass())
-                .clickToLoginBtn();
-        InfoAlert infoAlert = Selenide.page(InfoAlert.class);
-        assertEquals("Успешная авторизация!", infoAlert.getMsgText());
-        infoAlert.clickOkBtn();
-        infoAlert.checkDisappear();
+        final String EXPECTED_TEXT = "Успешная авторизация!";
+        new LoginRobot().typeUserName(Config.getUserLogin()).typePassword(Config.getUserPass()).clickToLoginBtn();
+        new InfoAlertRobot().checkMsgText(EXPECTED_TEXT).clickOkBtn().checkDisappear();
+        LOGGER.info("loginTest end");
     }
 
 }
