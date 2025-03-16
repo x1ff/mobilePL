@@ -32,9 +32,18 @@ public class AppTest extends BaseTest {
     public void loginTest() {
         LOGGER.info("loginTest test start");
         final String EXPECTED_TEXT = "Успешная авторизация!";
-        new LoginScreenRobot().typeUserName(Config.getUserLogin()).typePassword(Config.getUserPass()).clickToLoginBtn();
-        new InfoAlertRobot().checkMsgText(EXPECTED_TEXT).clickOkBtn().checkDisappear();
-        new UserScreenRobot().checkScreen();
+        new LoginScreenRobot()
+                .checkScreen()
+                .typeUserName(Config.getUserLogin())
+                .typePassword(Config.getUserPass())
+                .clickToLoginBtn();
+        new InfoAlertRobot()
+                .checkScreen()
+                .checkMsgText(EXPECTED_TEXT)
+                .clickOkBtn()
+                .checkDisappear();
+        new UserScreenRobot()
+                .checkScreen();
         LOGGER.info("loginTest end");
     }
 

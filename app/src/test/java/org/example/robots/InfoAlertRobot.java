@@ -6,7 +6,7 @@ import org.example.screens.InfoAlert;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
 
-public class InfoAlertRobot {
+public class InfoAlertRobot extends BaseScreenRobot{
     InfoAlert alert = Selenide.page(InfoAlert.class);
 
     public InfoAlertRobot checkMsgText(String expectedMsg) {
@@ -22,6 +22,12 @@ public class InfoAlertRobot {
     public InfoAlertRobot checkDisappear() {
         alert.getOkBtn().should(disappear);
         alert.getMsgText().should(disappear);
+        return this;
+    }
+
+    @Override
+    public InfoAlertRobot checkScreen() {
+        alert.checkScreenElements();
         return this;
     }
 }

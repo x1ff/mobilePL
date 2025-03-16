@@ -3,7 +3,9 @@ package org.example.screens;
 import com.codeborne.selenide.appium.SelenideAppiumElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
-public class InfoAlert {
+import static com.codeborne.selenide.Condition.visible;
+
+public class InfoAlert extends BaseScreen {
     @AndroidFindBy(id = "android:id/message")
     private SelenideAppiumElement msgText;
 
@@ -16,5 +18,11 @@ public class InfoAlert {
 
     public SelenideAppiumElement getOkBtn() {
         return okBtn;
+    }
+
+    @Override
+    public void checkScreenElements() {
+        msgText.shouldBe(visible);
+        okBtn.shouldBe(visible);
     }
 }
