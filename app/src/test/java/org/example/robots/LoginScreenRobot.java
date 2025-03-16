@@ -4,18 +4,18 @@ import com.codeborne.selenide.Selenide;
 import org.example.screens.LoginScreen;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
-public class LoginRobot {
+public class LoginScreenRobot {
 
     LoginScreen screen = Selenide.page(LoginScreen.class);
-    public LoginRobot () {
+    public LoginScreenRobot() {
 
     }
 
-    public LoginRobot typeUserName(String name) {
+    public LoginScreenRobot typeUserName(String name) {
         screen.getUserNameInput().shouldBe(visible).sendKeys(name);
         return this;
     }
-    public LoginRobot typePassword(String password) {
+    public LoginScreenRobot typePassword(String password) {
         screen.getPasswordInput().shouldBe(visible).sendKeys(password);
         return this;
     }

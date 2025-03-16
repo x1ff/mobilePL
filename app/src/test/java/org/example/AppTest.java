@@ -4,7 +4,8 @@
 package org.example;
 
 import org.example.robots.InfoAlertRobot;
-import org.example.robots.LoginRobot;
+import org.example.robots.LoginScreenRobot;
+import org.example.robots.UserScreenRobot;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class AppTest extends BaseTest {
         final String EXPECTED_TEXT = "Войти";
         assertEquals(
                 EXPECTED_TEXT,
-                new LoginRobot().getLoginBtnText(),
+                new LoginScreenRobot().getLoginBtnText(),
                 "У кнопки Войти неправильный текст"
         );
         LOGGER.info("checkTextBtn1 end");
@@ -31,8 +32,9 @@ public class AppTest extends BaseTest {
     public void loginTest() {
         LOGGER.info("loginTest test start");
         final String EXPECTED_TEXT = "Успешная авторизация!";
-        new LoginRobot().typeUserName(Config.getUserLogin()).typePassword(Config.getUserPass()).clickToLoginBtn();
+        new LoginScreenRobot().typeUserName(Config.getUserLogin()).typePassword(Config.getUserPass()).clickToLoginBtn();
         new InfoAlertRobot().checkMsgText(EXPECTED_TEXT).clickOkBtn().checkDisappear();
+        new UserScreenRobot().checkScreen();
         LOGGER.info("loginTest end");
     }
 
