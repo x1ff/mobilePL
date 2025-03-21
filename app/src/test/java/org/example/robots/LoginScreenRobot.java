@@ -6,31 +6,31 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
 public class LoginScreenRobot extends BaseScreenRobot{
 
-    LoginScreen screen = Selenide.page(LoginScreen.class);
+    LoginScreen loginScreen = Selenide.page(LoginScreen.class);
     public LoginScreenRobot() {
 
     }
 
     public LoginScreenRobot typeUserName(String name) {
-        screen.getUserNameInput().shouldBe(visible).sendKeys(name);
+        loginScreen.getUserNameInput().shouldBe(visible).sendKeys(name);
         return this;
     }
     public LoginScreenRobot typePassword(String password) {
-        screen.getPasswordInput().shouldBe(visible).sendKeys(password);
+        loginScreen.getPasswordInput().shouldBe(visible).sendKeys(password);
         return this;
     }
 
     public void clickToLoginBtn() {
-        screen.getLoginBtn().shouldBe(visible).click(tap());
+        loginScreen.getLoginBtn().shouldBe(visible).click(tap());
     }
 
     public String getLoginBtnText() {
-        return screen.getLoginBtn().shouldBe(visible).getText();
+        return loginScreen.getLoginBtn().shouldBe(visible).getText();
     }
 
     @Override
     public LoginScreenRobot checkScreen() {
-        screen.checkScreenElements();
+        loginScreen.checkScreenElements();
         return this;
     }
 }

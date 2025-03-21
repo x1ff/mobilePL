@@ -1,11 +1,12 @@
-package org.example.screens;
+package org.example.modals;
 
 import com.codeborne.selenide.appium.SelenideAppiumElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.example.screens.BaseScreen;
 
 import static com.codeborne.selenide.Condition.visible;
 
-public class InfoAlert extends BaseScreen {
+public class InfoAlertModal extends BaseScreen {
     @AndroidFindBy(id = "android:id/message")
     private SelenideAppiumElement msgText;
 

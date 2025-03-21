@@ -25,12 +25,12 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
         try {
             isLoad = Config.loadConfig("application.properties");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage());
         }
         if (isLoad) {
             Config.logConfig();
         } else {
-            LOGGER.info("Конфиг не загружен");
+            throw new RuntimeException("Конфиг не загружен");
         }
 
         UiAutomator2Options options = new UiAutomator2Options();

@@ -16,9 +16,6 @@ public class LoginScreen extends BaseScreen {
     @AndroidFindBy(id = "com.example.apppolygon:id/login")
     private SelenideAppiumElement loginBtn;
 
-    public LoginScreen() {
-
-    }
 
     public SelenideAppiumElement getUserNameInput() {
         return userNameInput;

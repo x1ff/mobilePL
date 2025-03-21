@@ -3,7 +3,7 @@
  */
 package org.example;
 
-import org.example.robots.InfoAlertRobot;
+import org.example.robots.InfoAlertModalRobot;
 import org.example.robots.LoginScreenRobot;
 import org.example.robots.UserScreenRobot;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class AppTest extends BaseTest {
                 .typeUserName(Config.getUserLogin())
                 .typePassword(Config.getUserPass())
                 .clickToLoginBtn();
-        new InfoAlertRobot()
+        new InfoAlertModalRobot()
                 .checkScreen()
                 .checkMsgText(EXPECTED_TEXT)
                 .clickOkBtn()
