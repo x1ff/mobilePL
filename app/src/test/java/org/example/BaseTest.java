@@ -3,6 +3,8 @@ package org.example;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.appium.SelenideAppium;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.example.provider.AndroidDriverAppProvider;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -19,7 +21,12 @@ public class BaseTest {
         LOGGER.info("Before test block start");
         Configuration.browser = AndroidDriverAppProvider.class.getName();
     }
-
+    @BeforeAll
+    static void setupAllureReports() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+        );
+    }
     @AfterAll
     public static void clean() {
 

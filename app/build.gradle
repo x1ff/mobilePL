@@ -15,13 +15,39 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
+group = 'org.allure'
+version = '1.0-SNAPSHOT'
+
+def allureVersion = '2.26.0'
+def aspectJVersion = '1.9.22'
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    agent {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
 
 dependencies {
+    agent "org.aspectj:aspectjweaver:$aspectJVersion"
     // This dependency is used by the application.
     implementation libs.guava
     implementation libs.junit
+    // Import allure-bom to ensure correct versions of all the dependencies are used
+    testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
+    // Add necessary Allure dependencies to dependencies section
+    testImplementation "io.qameta.allure:allure-junit5"
+    testImplementation platform("org.junit:junit-bom:5.10.2")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    
     // https://mvnrepository.com/artifact/io.appium/java-client
     implementation group: 'io.appium', name: 'java-client', version: '9.4.0'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-api
@@ -34,19 +60,17 @@ dependencies {
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.16'
     // https://mvnrepository.com/artifact/com.codeborne/selenide-appium
     implementation group: 'com.codeborne', name: 'selenide-appium', version: '7.7.3'
+    // https://allurereport.org/docs/guides/junit5-selenide-screenshots/
+    testImplementation 'io.qameta.allure:allure-selenide:2.27.0'
 
+
+
+    // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
+    runtimeOnly("org.aspectj:aspectjweaver:1.9.22")
 }
 
 test {
     useJUnitPlatform()
-}
-
-
-// Apply a specific Java toolchain to ease working on different environments.
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
 }
 
 application {
