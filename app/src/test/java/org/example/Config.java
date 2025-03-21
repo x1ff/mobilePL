@@ -15,6 +15,7 @@ public class Config {
     private static Config instance = null;
     private static String udid;
     private static String appiumUrl;
+    private static String apkDir;
 
     private static String userLogin;
     private static String userPass;
@@ -29,6 +30,7 @@ public class Config {
     }
 
     public static boolean loadConfig(String fileName) throws IOException {
+        apkDir = System.getenv("APK_DIR");
         Properties prop = new Properties();
         try (InputStream inputStream = Config.class.getClassLoader().getResourceAsStream(fileName)) {
             prop.load(inputStream);
@@ -48,6 +50,7 @@ public class Config {
         LOGGER.info("appiumUrl: {}", appiumUrl);
         LOGGER.info("userLogin: {}", userLogin);
         LOGGER.info("userPassword: {}", userPass);
+        LOGGER.info("apk Dir: {}", apkDir);
     }
 
     public static String getUdid() {
@@ -64,5 +67,9 @@ public class Config {
 
     public static String getUserPass() {
         return userPass;
+    }
+
+    public static String getApkDir() {
+        return apkDir;
     }
 }

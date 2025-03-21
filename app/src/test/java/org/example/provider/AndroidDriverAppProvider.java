@@ -19,8 +19,6 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
     @Override
     @NonNull
     public WebDriver createDriver(Capabilities capabilities) {
-        String apkDir = System.getenv("APK_DIR");
-        LOGGER.info("apk Dir: {}", apkDir);
         boolean isLoad = false;
         try {
             isLoad = Config.loadConfig("application.properties");
@@ -36,7 +34,7 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
         options.setUdid(Config.getUdid());
-        options.setApp(apkDir);
+        options.setApp(Config.getApkDir());
         try {
             return new AndroidDriver(new URL(Config.getAppiumUrl()), options);
         } catch (MalformedURLException e) {
