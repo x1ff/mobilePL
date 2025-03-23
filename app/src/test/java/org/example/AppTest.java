@@ -29,6 +29,18 @@ public class AppTest extends BaseTest {
     }
 
     @Test
+    public void failTest() {
+        LOGGER.info("fail test start");
+        final String EXPECTED_TEXT = "something wrong";
+        assertEquals(
+                EXPECTED_TEXT,
+                new LoginScreenRobot().getLoginBtnText(),
+                "У кнопки Войти неправильный текст"
+        );
+        LOGGER.info("checkTextBtn1 end");
+    }
+
+    @Test
     public void loginTest() {
         LOGGER.info("loginTest test start");
         final String EXPECTED_TEXT = "Успешная авторизация!";

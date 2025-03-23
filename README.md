@@ -14,8 +14,15 @@ PL MobileTesting IPR
 ```adb devices```
 6. Измените настройки в application.properties
 
-7. Нажимаем треугольник в идее
-8. TODO  переделать запуск командой
+7. Чистим старое
+```gradle clean```
+8. Запускаем тесты
+   ```gradle test```
+9. Переходим в build директорию
+```cd app/build```
+10. Смотрим  allure report
+```allure serve```
+
 
 ## Appium inspector 
 ````

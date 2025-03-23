@@ -20,13 +20,13 @@ public class BaseTest {
     public static void setUp() {
         LOGGER.info("Before test block start");
         Configuration.browser = AndroidDriverAppProvider.class.getName();
-    }
-    @BeforeAll
-    static void setupAllureReports() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .savePageSource(true)
+                .includeSelenideSteps(true)
                 .screenshots(true)
         );
     }
+
     @AfterAll
     public static void clean() {
 

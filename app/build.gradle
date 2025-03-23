@@ -47,7 +47,7 @@ dependencies {
     testImplementation platform("org.junit:junit-bom:5.10.2")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    
+
     // https://mvnrepository.com/artifact/io.appium/java-client
     implementation group: 'io.appium', name: 'java-client', version: '9.4.0'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-api
@@ -62,15 +62,21 @@ dependencies {
     implementation group: 'com.codeborne', name: 'selenide-appium', version: '7.7.3'
     // https://allurereport.org/docs/guides/junit5-selenide-screenshots/
     testImplementation 'io.qameta.allure:allure-selenide:2.27.0'
-
+    testAnnotationProcessor("io.qameta.allure:allure-descriptions-javadoc:$allureVersion")
 
 
     // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
     runtimeOnly("org.aspectj:aspectjweaver:1.9.22")
 }
 
+// https://docs.gradle.org/current/userguide/java_testing.html
 test {
+    ignoreFailures = true
     useJUnitPlatform()
+    testLogging {
+        events "passed"
+    }
+    jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
 }
 
 application {

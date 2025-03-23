@@ -7,7 +7,7 @@ import org.example.screens.UsersScreen;
 public class UserScreenRobot extends BaseScreenRobot {
     UsersScreen usersScreen = Selenide.page(UsersScreen.class);
 
-    @Step("Проверить наличие элементов")
+    @Step("Проверить, что открыт экран")
     @Override
     public UserScreenRobot checkScreen() {
         usersScreen.checkScreenElements();

@@ -12,7 +12,7 @@ import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
 public class InfoAlertModalRobot extends BaseScreenRobot{
     InfoAlertModal infoAlertModal = Selenide.page(InfoAlertModal.class);
 
-    @Step("Проверить текст сообщения")
+    @Step("Проверить текст сообщения {expectedMsg}")
     public InfoAlertModalRobot checkMsgText(String expectedMsg) {
         infoAlertModal.getMsgText().shouldBe(visible).shouldHave(text(expectedMsg));
         return this;
@@ -31,7 +31,7 @@ public class InfoAlertModalRobot extends BaseScreenRobot{
         return this;
     }
 
-    @Step("Проверить наличие элементов")
+    @Step("Проверить, что открыт экран")
     @Override
     public InfoAlertModalRobot checkScreen() {
         infoAlertModal.checkScreenElements();

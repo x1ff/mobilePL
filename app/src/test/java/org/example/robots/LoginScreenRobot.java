@@ -9,7 +9,12 @@ public class LoginScreenRobot extends BaseScreenRobot{
 
     LoginScreen loginScreen = Selenide.page(LoginScreen.class);
 
-    @Step("Ввести имя пользователя")
+    /**
+     * Ввести имя пользователя
+     * @param name
+     * @return
+     */
+    @Step("Ввести имя пользователя {name}")
     public LoginScreenRobot typeUserName(String name) {
         loginScreen.getUserNameInput().shouldBe(visible).sendKeys(name);
         return this;
@@ -27,7 +32,7 @@ public class LoginScreenRobot extends BaseScreenRobot{
     public String getLoginBtnText() {
         return loginScreen.getLoginBtn().shouldBe(visible).getText();
     }
-    @Step("Проверить наличие элементов")
+    @Step("Проверить, что открыт экран")
     @Override
     public LoginScreenRobot checkScreen() {
         loginScreen.checkScreenElements();
