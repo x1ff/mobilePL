@@ -29,7 +29,7 @@ public class Config {
         return instance;
     }
 
-    public static boolean loadConfig(String fileName) throws IOException {
+    public static void loadConfig(String fileName) throws IOException {
         apkDir = System.getenv("APK_DIR");
         Properties prop = new Properties();
         try (InputStream inputStream = Config.class.getClassLoader().getResourceAsStream(fileName)) {
@@ -38,11 +38,10 @@ public class Config {
             appiumUrl = prop.getProperty("appiumUrl");
             userLogin = prop.getProperty("userLogin");
             userPass = prop.getProperty("userPassword");
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             LOGGER.error("Ошибка при загрузке конфига {}", e.getMessage());
             throw new IllegalStateException("Ошибка при загрузке конфига");
         }
-        return true;
     }
 
     public static void logConfig() {

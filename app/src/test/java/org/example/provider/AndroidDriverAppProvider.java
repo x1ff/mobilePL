@@ -19,17 +19,13 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
     @Override
     @NonNull
     public WebDriver createDriver(Capabilities capabilities) {
-        boolean isLoad = false;
         try {
-            isLoad = Config.loadConfig("application.properties");
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
+            Config.loadConfig("application.properties");
+            LOGGER.info("Конфигуцрация загружена!");
+        } catch (IllegalStateException | IOException e) {
+            LOGGER.error("Конфигурация не загружена");
         }
-        if (isLoad) {
-            Config.logConfig();
-        } else {
-            throw new RuntimeException("Конфиг не загружен");
-        }
+        Config.logConfig();
 
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
