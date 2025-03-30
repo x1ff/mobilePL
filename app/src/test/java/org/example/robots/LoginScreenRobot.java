@@ -4,7 +4,7 @@ import com.codeborne.selenide.Selenide;
 import org.example.screens.LoginScreen;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
-public class LoginScreenRobot extends BaseScreenRobot{
+public class LoginScreenRobot implements Robotic {
 
     LoginScreen loginScreen = Selenide.page(LoginScreen.class);
     public LoginScreenRobot() {

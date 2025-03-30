@@ -3,7 +3,7 @@ package org.example.robots;
 import com.codeborne.selenide.Selenide;
 import org.example.screens.UsersScreen;
 
-public class UserScreenRobot extends BaseScreenRobot {
+public class UserScreenRobot implements Robotic {
     UsersScreen usersScreen = Selenide.page(UsersScreen.class);
 
     @Override

@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
 
-public class InfoAlertModalRobot extends BaseScreenRobot{
+public class InfoAlertModalRobot implements Robotic {
     InfoAlertModal infoAlertModal = Selenide.page(InfoAlertModal.class);
 
     public InfoAlertModalRobot checkMsgText(String expectedMsg) {
