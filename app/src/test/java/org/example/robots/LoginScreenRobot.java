@@ -3,6 +3,8 @@ package org.example.robots;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.example.screens.LoginScreen;
+
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
 public class LoginScreenRobot extends BaseScreenRobot{
@@ -31,6 +33,13 @@ public class LoginScreenRobot extends BaseScreenRobot{
     @Step("Получить текст у кнопки логин")
     public String getLoginBtnText() {
         return loginScreen.getLoginBtn().shouldBe(visible).getText();
+    }
+
+    @Step("Проверить текст у кнопки логин")
+    public LoginScreenRobot checkLoginBtnText(String expected) {
+        loginScreen.getLoginBtn().shouldBe(visible).shouldHave(text(expected));
+        return this;
+
     }
     @Step("Проверить, что открыт экран")
     @Override

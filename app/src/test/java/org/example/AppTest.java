@@ -32,12 +32,8 @@ public class AppTest extends BaseTest {
     public void failTest() {
         LOGGER.info("fail test start");
         final String EXPECTED_TEXT = "something wrong";
-        assertEquals(
-                EXPECTED_TEXT,
-                new LoginScreenRobot().getLoginBtnText(),
-                "У кнопки Войти неправильный текст"
-        );
-        LOGGER.info("checkTextBtn1 end");
+        new LoginScreenRobot().checkLoginBtnText(EXPECTED_TEXT);
+        LOGGER.info("failTest end");
     }
 
     @Test
