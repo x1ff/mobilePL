@@ -7,8 +7,8 @@ public class UserScreenRobot implements Robotic {
     UsersScreen usersScreen = Selenide.page(UsersScreen.class);
 
     @Override
-    public UserScreenRobot checkScreen() {
-        usersScreen.checkScreenElements();
+    public UserScreenRobot assertVisibleElements() {
+        usersScreen.assertVisibleElements();
         return this;
     }
 }

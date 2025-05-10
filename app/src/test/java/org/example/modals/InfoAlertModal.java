@@ -1,29 +1,28 @@
 package org.example.modals;
 
-import com.codeborne.selenide.appium.SelenideAppiumElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.screens.BaseScreen;
-
-import static com.codeborne.selenide.Condition.visible;
+import org.example.elements.Button;
+import org.example.elements.TextBlock;
 
 public class InfoAlertModal extends BaseScreen {
     @AndroidFindBy(id = "android:id/message")
-    private SelenideAppiumElement msgText;
+    private TextBlock msgText;
 
     @AndroidFindBy(id = "android:id/button1")
-    private SelenideAppiumElement okBtn;
+    private Button okBtn;
 
-    public SelenideAppiumElement getMsgText() {
+    public TextBlock getMsgText() {
         return msgText;
     }
 
-    public SelenideAppiumElement getOkBtn() {
+    public Button getOkBtn() {
         return okBtn;
     }
 
     @Override
-    public void checkScreenElements() {
-        msgText.shouldBe(visible);
-        okBtn.shouldBe(visible);
+    public void assertVisibleElements() {
+        msgText.assertVisible();
+        okBtn.assertVisible();
     }
 }
