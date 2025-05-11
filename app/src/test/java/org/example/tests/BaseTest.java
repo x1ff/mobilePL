@@ -2,14 +2,23 @@ package org.example.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.appium.SelenideAppium;
+import com.codeborne.selenide.appium.commands.AppiumClear;
+import io.appium.java_client.android.AndroidDriver;
+import org.example.Config;
 import org.example.provider.AndroidDriverAppProvider;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.JavascriptExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class.getName());
@@ -18,6 +27,7 @@ public class BaseTest {
     public static void setUp() {
         LOGGER.info("Before test block start");
         Configuration.browser = AndroidDriverAppProvider.class.getName();
+        SelenideAppium.launchApp();
     }
 
     @AfterAll
@@ -27,12 +37,19 @@ public class BaseTest {
 
     @BeforeEach
     public void runApp() {
-        SelenideAppium.launchApp();
+
         LOGGER.info("SelenideAppium.launchApp() was done");
     }
 
     @AfterEach
     public void cleanEach() {
-        Selenide.closeWebDriver();
+        // Selenide.closeWebDriver();
+        Map<String, Object> params = new HashMap<>();
+        params.put("packageName", Config.getAppId());
+        params.put("appId", Config.getAppId());
+        JavascriptExecutor jsDriver = (JavascriptExecutor) WebDriverRunner.getWebDriver();
+        jsDriver.executeScript("mobile: clearApp", params);
+
+        SelenideAppium.relaunchApp(Config.getAppId());
     }
 }

@@ -16,9 +16,9 @@ public class Config {
     private static String udid;
     private static String appiumUrl;
     private static String apkDir;
-
     private static String userLogin;
     private static String userPass;
+    private static String appId;
     private Config() {
     }
 
@@ -38,6 +38,7 @@ public class Config {
             appiumUrl = prop.getProperty("appiumUrl");
             userLogin = prop.getProperty("userLogin");
             userPass = prop.getProperty("userPassword");
+            appId = prop.getProperty("appId");
         } catch (IOException | RuntimeException e) {
             LOGGER.error("Ошибка при загрузке конфига {}", e.getMessage());
             throw new IllegalStateException("Ошибка при загрузке конфига");
@@ -50,6 +51,7 @@ public class Config {
         LOGGER.info("userLogin: {}", userLogin);
         LOGGER.info("userPassword: {}", userPass);
         LOGGER.info("apk Dir: {}", apkDir);
+        LOGGER.info("appId: {}", appId);
     }
 
     public static String getUdid() {
@@ -70,5 +72,9 @@ public class Config {
 
     public static String getApkDir() {
         return apkDir;
+    }
+
+    public static String getAppId() {
+        return appId;
     }
 }
