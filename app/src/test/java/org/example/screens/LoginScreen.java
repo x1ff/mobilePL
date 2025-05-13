@@ -1,10 +1,8 @@
 package org.example.screens;
 
-import com.codeborne.selenide.appium.SelenideAppiumElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.example.elements.Button;
 import org.example.elements.TextInput;
-
 
 public class LoginScreen extends BaseScreen {
 
@@ -14,7 +12,6 @@ public class LoginScreen extends BaseScreen {
     public TextInput passwordInput;
     @AndroidFindBy(id = "com.example.apppolygon:id/login")
     public Button loginBtn;
-
 
     public TextInput getUserNameInput() {
         return userNameInput;

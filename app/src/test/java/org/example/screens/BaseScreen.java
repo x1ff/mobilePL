@@ -1,8 +1,6 @@
 package org.example.screens;
 
-
 import com.codeborne.selenide.Selenide;
-
 
 public abstract class BaseScreen {
 

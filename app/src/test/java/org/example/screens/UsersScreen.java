@@ -6,7 +6,6 @@ import static com.codeborne.selenide.Condition.visible;
 public class UsersScreen extends BaseScreen {
     @AndroidFindBy(id = "com.example.apppolygon:id/buttonCreateUser")
     public SelenideAppiumElement createUserBtn;
-
     @AndroidFindBy(id = "com.example.apppolygon:id/carMenu")
     public SelenideAppiumElement carMenuBtn;
     @AndroidFindBy(id = "com.example.apppolygon:id/housesMenu")

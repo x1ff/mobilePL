@@ -1,11 +1,8 @@
 package org.example.tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.appium.SelenideAppium;
-import com.codeborne.selenide.appium.commands.AppiumClear;
-import io.appium.java_client.android.AndroidDriver;
 import org.example.Config;
 import org.example.provider.AndroidDriverAppProvider;
 import org.junit.jupiter.api.AfterAll;
@@ -16,7 +13,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,13 +39,11 @@ public class BaseTest {
 
     @AfterEach
     public void cleanEach() {
-        // Selenide.closeWebDriver();
         Map<String, Object> params = new HashMap<>();
         params.put("packageName", Config.getAppId());
         params.put("appId", Config.getAppId());
         JavascriptExecutor jsDriver = (JavascriptExecutor) WebDriverRunner.getWebDriver();
         jsDriver.executeScript("mobile: clearApp", params);
-
         SelenideAppium.relaunchApp(Config.getAppId());
     }
 }
