@@ -19,20 +19,6 @@ public abstract class ElementsContainerWrapper implements Container {
     @Self
     SelenideElement self;
 
-    public static <T extends ElementsContainerWrapper> T wrap(SelenideElement element, Class<T> type) {
-        try {
-            Field field = type.getDeclaredField("self");
-            field.setAccessible(true);
-            Constructor<T> constructor = type.getDeclaredConstructor();
-            T instance = constructor.newInstance();
-            field.set(instance, element);
-            return instance;
-        } catch (NoSuchFieldException | InstantiationException | IllegalAccessException | InvocationTargetException |
-                 NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void assertText(String expectedText) {
         self.shouldBe(visible).shouldHave(Condition.text(expectedText));
     }
