@@ -39,11 +39,13 @@ public class BaseTest {
 
     @AfterEach
     public void cleanEach() {
+        String appId = Config.getAppId();
+        SelenideAppium.terminateApp(appId);
         Map<String, Object> params = new HashMap<>();
-        params.put("packageName", Config.getAppId());
-        params.put("appId", Config.getAppId());
+        params.put("packageName", appId);
+        params.put("appId", appId);
         JavascriptExecutor jsDriver = (JavascriptExecutor) WebDriverRunner.getWebDriver();
         jsDriver.executeScript("mobile: clearApp", params);
-        SelenideAppium.relaunchApp(Config.getAppId());
+        SelenideAppium.relaunchApp(appId);
     }
 }
