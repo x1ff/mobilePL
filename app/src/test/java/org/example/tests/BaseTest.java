@@ -3,6 +3,8 @@ package org.example.tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.appium.SelenideAppium;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.example.Config;
 import org.example.provider.AndroidDriverAppProvider;
 import org.junit.jupiter.api.AfterAll;
@@ -23,6 +25,11 @@ public class BaseTest {
     public static void setUp() {
         LOGGER.info("Before test block start");
         Configuration.browser = AndroidDriverAppProvider.class.getName();
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .savePageSource(true)
+                .includeSelenideSteps(true)
+                .screenshots(true)
+        );
         SelenideAppium.launchApp();
     }
 
