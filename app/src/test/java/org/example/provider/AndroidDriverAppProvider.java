@@ -22,9 +22,10 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
         try {
             // Config.loadConfig("application-local.properties");
             Config.loadConfig("application.properties");
-            LOGGER.info("Конфигуцрация загружена!");
-        } catch (IllegalStateException | IOException e) {
+            LOGGER.info("Конфигурация загружена!");
+        } catch (IllegalStateException e) {
             LOGGER.error("Конфигурация не загружена");
+            throw new IllegalStateException("Ошибка при загрузке конфига");
         }
         Config.logConfig();
 

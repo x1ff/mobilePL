@@ -29,7 +29,7 @@ public class Config {
         return instance;
     }
 
-    public static void loadConfig(String fileName) throws IOException {
+    public static void loadConfig(String fileName) throws IllegalStateException {
         apkDir = System.getenv("APK_DIR");
         Properties prop = new Properties();
         try (InputStream inputStream = Config.class.getClassLoader().getResourceAsStream(fileName)) {
