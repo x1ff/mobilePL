@@ -1,40 +1,34 @@
 package org.example.screens;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.appium.SelenideAppiumElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.example.elements.Button;
+import org.example.elements.TextInput;
 
 public class LoginScreen extends BaseScreen {
 
     @AndroidFindBy(id = "com.example.apppolygon:id/username")
-    private SelenideAppiumElement userNameInput;
+    public TextInput userNameInput;
     @AndroidFindBy(id = "com.example.apppolygon:id/password")
-    private SelenideAppiumElement passwordInput;
+    public TextInput passwordInput;
     @AndroidFindBy(id = "com.example.apppolygon:id/login")
-    private SelenideAppiumElement loginBtn;
+    public Button loginBtn;
 
-
-    public SelenideAppiumElement getUserNameInput() {
+    public TextInput getUserNameInput() {
         return userNameInput;
     }
 
-    public SelenideAppiumElement getPasswordInput() {
+    public TextInput getPasswordInput() {
         return passwordInput;
     }
 
-    public SelenideAppiumElement getLoginBtn() {
+    public Button getLoginBtn() {
         return loginBtn;
     }
 
     @Override
-    public void checkScreenElements() {
-        userNameInput.shouldBe(visible);
-        passwordInput.shouldBe(visible);
-        loginBtn.shouldBe(visible);
+    public void assertVisibleElements() {
+        userNameInput.assertVisible();
+        passwordInput.assertVisible();
+        loginBtn.assertVisible();
     }
-
-
 }

@@ -4,37 +4,32 @@ import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.example.modals.InfoAlertModal;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Condition.disappear;
-import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
-
-public class InfoAlertModalRobot extends BaseScreenRobot{
+public class InfoAlertModalRobot implements Robotic {
     InfoAlertModal infoAlertModal = Selenide.page(InfoAlertModal.class);
 
     @Step("Проверить текст сообщения {expectedMsg}")
     public InfoAlertModalRobot checkMsgText(String expectedMsg) {
-        infoAlertModal.getMsgText().shouldBe(visible).shouldHave(text(expectedMsg));
+        infoAlertModal.getMsgText().assertText(expectedMsg);
         return this;
     }
 
     @Step("Кликнуть ОК")
     public InfoAlertModalRobot clickOkBtn() {
-        infoAlertModal.getOkBtn().shouldBe(visible).click(tap());
+        infoAlertModal.getOkBtn().click();
         return this;
     }
 
     @Step("Проверить исчезновение")
     public InfoAlertModalRobot checkDisappear() {
-        infoAlertModal.getOkBtn().should(disappear);
-        infoAlertModal.getMsgText().should(disappear);
+        infoAlertModal.getOkBtn().assertDissapear();
+        infoAlertModal.getMsgText().assertDissapear();
         return this;
     }
 
     @Step("Проверить, что открыт экран")
     @Override
-    public InfoAlertModalRobot checkScreen() {
-        infoAlertModal.checkScreenElements();
+    public InfoAlertModalRobot assertVisibleElements() {
+        infoAlertModal.assertVisibleElements();
         return this;
     }
 }

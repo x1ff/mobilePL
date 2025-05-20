@@ -1,16 +1,14 @@
 package org.example.provider;
 
+import androidx.annotation.NonNull;
 import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.example.Config;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -19,17 +17,15 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
     @Override
     @NonNull
     public WebDriver createDriver(Capabilities capabilities) {
-        boolean isLoad = false;
         try {
-            isLoad = Config.loadConfig("application.properties");
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
+            //Config.loadConfig("application-local.properties");
+            Config.loadConfig("application.properties");
+            LOGGER.info("Конфигурация загружена!");
+        } catch (IllegalStateException e) {
+            LOGGER.error("Конфигурация не загружена");
+            throw new IllegalStateException("Ошибка при загрузке конфига");
         }
-        if (isLoad) {
-            Config.logConfig();
-        } else {
-            throw new RuntimeException("Конфиг не загружен");
-        }
+        Config.logConfig();
 
         UiAutomator2Options options = new UiAutomator2Options();
         options.merge(capabilities);
@@ -40,6 +36,5 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

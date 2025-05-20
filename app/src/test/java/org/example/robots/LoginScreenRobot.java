@@ -1,15 +1,17 @@
 package org.example.robots;
 
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
 import org.example.screens.LoginScreen;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.appium.AppiumClickOptions.tap;
-public class LoginScreenRobot extends BaseScreenRobot{
-
-    LoginScreen loginScreen = Selenide.page(LoginScreen.class);
+public class LoginScreenRobot implements Robotic {
+    LoginScreen loginScreen;
+    public LoginScreenRobot(LoginScreen screen) {
+        loginScreen = screen;
+    }
+    public LoginScreenRobot assertLoginBtnText(String text) {
+        loginScreen.getLoginBtn().assertText(text);
+        return this;
+    }
 
     /**
      * Ввести имя пользователя
@@ -18,33 +20,33 @@ public class LoginScreenRobot extends BaseScreenRobot{
      */
     @Step("Ввести имя пользователя {name}")
     public LoginScreenRobot typeUserName(String name) {
-        loginScreen.getUserNameInput().shouldBe(visible).sendKeys(name);
+        loginScreen.getUserNameInput().type(name);
         return this;
     }
     @Step("Ввести пароль")
     public LoginScreenRobot typePassword(String password) {
-        loginScreen.getPasswordInput().shouldBe(visible).sendKeys(password);
+        loginScreen.getPasswordInput().type(password);
         return this;
     }
     @Step("Кликаем на кнопку логин")
     public void clickToLoginBtn() {
-        loginScreen.getLoginBtn().shouldBe(visible).click(tap());
+        loginScreen.getLoginBtn().click();
     }
     @Step("Получить текст у кнопки логин")
     public String getLoginBtnText() {
-        return loginScreen.getLoginBtn().shouldBe(visible).getText();
+        return loginScreen.getLoginBtn().getText();
     }
 
     @Step("Проверить текст у кнопки логин")
     public LoginScreenRobot checkLoginBtnText(String expected) {
-        loginScreen.getLoginBtn().shouldBe(visible).shouldHave(text(expected));
+        loginScreen.getLoginBtn().assertText(expected);
         return this;
 
     }
     @Step("Проверить, что открыт экран")
     @Override
-    public LoginScreenRobot checkScreen() {
-        loginScreen.checkScreenElements();
+    public LoginScreenRobot assertVisibleElements() {
+        loginScreen.assertVisibleElements();
         return this;
     }
 }
