@@ -20,6 +20,7 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation libs.junit
+    implementation libs.annotation.jvm
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     // https://mvnrepository.com/artifact/io.appium/java-client
@@ -32,7 +33,8 @@ dependencies {
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '4.28.1'
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.16'
-
+    // https://mvnrepository.com/artifact/com.codeborne/selenide-appium
+    implementation group: 'com.codeborne', name: 'selenide-appium', version: '7.9.2'
 }
 
 test {
