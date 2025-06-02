@@ -12,6 +12,7 @@ selenium = "4.28.1"
 appium = "9.4.0"
 logback = "1.5.16"
 selenide = "7.9.2"
+
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 allure = { module = "io.qameta.allure:allure-bom", version.ref = "allure" }
@@ -28,3 +29,8 @@ seleniumSupport = { group = "org.seleniumhq.selenium", name = "selenium-support"
 javaClient = { group = "io.appium", name = "java-client", version.ref = "appium" }
 logbackClassic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 selenideAppium = { group = "com.codeborne", name = "selenide-appium", version.ref = "selenide" }
+
+[bundles]
+selenium = [
+    "seleniumApi", "seleniumRemoteDriver", "seleniumSupport"
+]

@@ -45,9 +45,7 @@ dependencies {
     testImplementation libs.jupiterApi
     testRuntimeOnly libs.jupiterEngine
     implementation libs.javaClient
-    implementation libs.seleniumApi
-    implementation libs.seleniumRemoteDriver
-    implementation libs.seleniumSupport
+    implementation libs.bundles.selenium
     implementation libs.logbackClassic
     implementation libs.selenideAppium
     // https://allurereport.org/docs/guides/junit5-selenide-screenshots/
