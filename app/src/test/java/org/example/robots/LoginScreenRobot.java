@@ -8,10 +8,6 @@ public class LoginScreenRobot implements Robotic {
     public LoginScreenRobot(LoginScreen screen) {
         loginScreen = screen;
     }
-    public LoginScreenRobot assertLoginBtnText(String text) {
-        loginScreen.getLoginBtn().assertText(text);
-        return this;
-    }
 
     /**
      * Ввести имя пользователя
@@ -32,16 +28,16 @@ public class LoginScreenRobot implements Robotic {
     public void clickToLoginBtn() {
         loginScreen.getLoginBtn().click();
     }
-    @Step("Получить текст у кнопки логин")
-    public String getLoginBtnText() {
-        return loginScreen.getLoginBtn().getText();
+    @Step("Проверить текст у кнопки логин")
+    public LoginScreenRobot assertLoginBtnText(String expectedText) {
+        loginScreen.getLoginBtn().assertText(expectedText);
+        return this;
     }
 
     @Step("Проверить текст у кнопки логин")
     public LoginScreenRobot checkLoginBtnText(String expected) {
         loginScreen.getLoginBtn().assertText(expected);
         return this;
-
     }
     @Step("Проверить, что открыт экран")
     @Override

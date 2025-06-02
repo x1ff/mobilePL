@@ -17,7 +17,7 @@ PL MobileTesting IPR
 7. Чистим старое
 ```gradle clean```
 8. Запускаем тесты
-   ```gradle test```
+   ```gradle test --rerun```
 9. Переходим в build директорию
 ```cd app/build```
 10. Смотрим  allure report
