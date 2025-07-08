@@ -9,6 +9,8 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -18,7 +20,6 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
     @NonNull
     public WebDriver createDriver(Capabilities capabilities) {
         try {
-            //Config.loadConfig("application-local.properties");
             Config.loadConfig("application.properties");
             LOGGER.info("Конфигурация загружена!");
         } catch (IllegalStateException e) {

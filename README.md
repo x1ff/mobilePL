@@ -4,7 +4,7 @@ PL MobileTesting IPR
 ## Run a test using
 1. Создайте в корене проэкта директорию apk и разместите в ней apk файл
 2. Создайте переменную окружения с именем  APK_DIR, укажите в ней абсолютный путь до директории
-3. Измените application.properties, укажите верные логин, пароль
+3. Измените используя application-template.properties создайте application.properties, укажите верные логин, пароль
 4. Запустите сервер апиум
 
 ```appium```

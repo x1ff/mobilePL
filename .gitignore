@@ -58,3 +58,4 @@ apk
 app/out
 # properties with auth data
 application-local.properties
+app/src/test/resources/application.properties

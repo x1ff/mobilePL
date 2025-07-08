@@ -16,6 +16,8 @@ selenide = "7.9.2"
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 allure = { module = "io.qameta.allure:allure-bom", version.ref = "allure" }
+
+allureJunit5 = { group = "io.qameta.allure", name = "allure-junit5", version = "allure" }
 allureDescriptionsJavadoc = { group = "io.qameta.allure", name = "allure-descriptions-javadoc", version.ref = "allure" }
 allureSelenide = { group = "io.qameta.allure", name = "allure-selenide", version.ref = "allure" }
 junitBom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
