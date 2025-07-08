@@ -12,7 +12,7 @@ PL MobileTesting IPR
 5. Запустите эмулятор и посмотрете udid
 
 ```adb devices```
-6. Измените настройки в application.properties
+6. Измените udid в application.properties
 
 7. Чистим старое
 ```gradle clean```
