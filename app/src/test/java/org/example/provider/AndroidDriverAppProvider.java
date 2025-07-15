@@ -20,7 +20,6 @@ public class AndroidDriverAppProvider implements WebDriverProvider {
     @NonNull
     public WebDriver createDriver(Capabilities capabilities) {
         try {
-            // Config.loadConfig("application-local.properties");
             Config.loadConfig("application.properties");
             LOGGER.info("Конфигурация загружена!");
         } catch (IllegalStateException e) {

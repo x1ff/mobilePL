@@ -15,38 +15,53 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
-
-dependencies {
-    // This dependency is used by the application.
-    implementation libs.guava
-    implementation libs.junit
-    implementation libs.annotation.jvm
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    // https://mvnrepository.com/artifact/io.appium/java-client
-    implementation group: 'io.appium', name: 'java-client', version: '9.4.0'
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-api
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '4.28.1'
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '4.28.1'
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '4.28.1'
-    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.16'
-    // https://mvnrepository.com/artifact/com.codeborne/selenide-appium
-    implementation group: 'com.codeborne', name: 'selenide-appium', version: '7.9.2'
-}
-
-test {
-    useJUnitPlatform()
-}
-
+group = 'org.example'
+version = '1.0-SNAPSHOT'
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+configurations {
+    agent {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
+
+dependencies {
+    agent libs.aspectJWeaver
+    // This dependency is used by the application.
+    implementation libs.guava
+    implementation libs.annotation.jvm
+    // Import allure-bom to ensure correct versions of all the dependencies are used
+    testImplementation platform(libs.allure)
+    // Add necessary Allure dependencies to dependencies section
+    testImplementation libs.allureJunit5
+    testImplementation platform(libs.junitBom)
+    testImplementation libs.jupiterApi
+    testRuntimeOnly libs.jupiterEngine
+    implementation libs.javaClient
+    implementation libs.bundles.selenium
+    implementation libs.logbackClassic
+    implementation libs.selenideAppium
+    // https://allurereport.org/docs/guides/junit5-selenide-screenshots/
+    testImplementation libs.allureSelenide
+    testAnnotationProcessor(libs.allureDescriptionsJavadoc)
+    runtimeOnly(libs.aspectJWeaver)
+}
+
+// https://docs.gradle.org/current/userguide/java_testing.html
+test {
+    ignoreFailures = true
+    useJUnitPlatform()
+    testLogging {
+        events "passed"
+    }
+    jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
 }
 
 application {

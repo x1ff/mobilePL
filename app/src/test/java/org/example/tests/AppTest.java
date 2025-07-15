@@ -26,6 +26,15 @@ public class AppTest extends BaseTest {
     }
 
     @Test
+    public void failTest() {
+        LOGGER.info("fail test start");
+        final String EXPECTED_TEXT = "something wrong";
+        LoginScreen loginScreen = new LoginScreen();
+        new LoginScreenRobot(loginScreen).checkLoginBtnText(EXPECTED_TEXT);
+        LOGGER.info("failTest end");
+    }
+
+    @Test
     public void loginTest() {
         LOGGER.info("loginTest test start");
         final String EXPECTED_TEXT = "Успешная авторизация!";

@@ -4,11 +4,35 @@
 [versions]
 guava = "33.3.1-jre"
 firebaseFirestore = "25.1.2"
-junit = "4.13.1"
+junit = "5.10.2"
 annotationJvm = "1.9.1"
+allure = "2.27.0"
+aspectJ = "1.9.22"
+selenium = "4.28.1"
+appium = "9.4.0"
+logback = "1.5.16"
+selenide = "7.9.2"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
+allure = { module = "io.qameta.allure:allure-bom", version.ref = "allure" }
+
+allureJunit5 = { group = "io.qameta.allure", name = "allure-junit5", version = "allure" }
+allureDescriptionsJavadoc = { group = "io.qameta.allure", name = "allure-descriptions-javadoc", version.ref = "allure" }
+allureSelenide = { group = "io.qameta.allure", name = "allure-selenide", version.ref = "allure" }
+junitBom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
+jupiterApi = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit" }
+jupiterEngine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit" }
 annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
+aspectJWeaver = { group = "org.aspectj", name = "aspectjweaver", version.ref = "aspectJ"}
+seleniumApi = { group = "org.seleniumhq.selenium", name = "selenium-api", version.ref = "selenium" }
+seleniumRemoteDriver = { group = "org.seleniumhq.selenium", name = "selenium-remote-driver", version.ref = "selenium" }
+seleniumSupport = { group = "org.seleniumhq.selenium", name = "selenium-support", version.ref = "selenium" }
+javaClient = { group = "io.appium", name = "java-client", version.ref = "appium" }
+logbackClassic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+selenideAppium = { group = "com.codeborne", name = "selenide-appium", version.ref = "selenide" }
+
+[bundles]
+selenium = [
+    "seleniumApi", "seleniumRemoteDriver", "seleniumSupport"
+]
