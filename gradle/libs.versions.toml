@@ -12,6 +12,11 @@ selenium = "4.28.1"
 appium = "9.4.0"
 logback = "1.5.16"
 selenide = "7.9.2"
+agp = "8.10.0"
+junitVersion = "4.13.2"
+runner = "1.0.2"
+espressoCore = "3.0.2"
+appcompatV7 = "28.0.0"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
@@ -31,6 +36,12 @@ seleniumSupport = { group = "org.seleniumhq.selenium", name = "selenium-support"
 javaClient = { group = "io.appium", name = "java-client", version.ref = "appium" }
 logbackClassic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 selenideAppium = { group = "com.codeborne", name = "selenide-appium", version.ref = "selenide" }
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
+runner = { group = "com.android.support.test", name = "runner", version.ref = "runner" }
+espresso-core = { group = "com.android.support.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat-v7 = { group = "com.android.support", name = "appcompat-v7", version.ref = "appcompatV7" }
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
 
 [bundles]
 selenium = [
