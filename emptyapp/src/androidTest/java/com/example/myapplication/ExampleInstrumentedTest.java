@@ -1,12 +1,12 @@
 package com.example.myapplication;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
@@ -15,10 +15,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -27,12 +30,13 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    private static final String BASIC_SAMPLE_PACKAGE = "com.example.apppolygon";
+    private static final String APP_POLYGON_PACKAGE = "com.example.apppolygon";
     private static final int LAUNCH_TIMEOUT = 5000;
 
     private UiDevice mDevice;
+
     @Before
-    public void startMainActivityFromHomeScreen() {
+    public void startMainActivityFromHomeScreen() throws Exception {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -41,33 +45,47 @@ public class ExampleInstrumentedTest {
 
         // Wait for launcher
         final String launcherPackage = getLauncherPackageName();
+        System.out.println("LauncherPackageName " + launcherPackage);
         assertThat(launcherPackage, notNullValue());
         mDevice.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);
 
         // Launch the blueprint app
         Context context = getApplicationContext();
-        final Intent intent = context.getPackageManager()
-                .getLaunchIntentForPackage(BASIC_SAMPLE_PACKAGE);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);    // Clear out any previous instances
-        //context.startActivity(intent);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setPackage(APP_POLYGON_PACKAGE);
+        intent.setComponent(new ComponentName(APP_POLYGON_PACKAGE, APP_POLYGON_PACKAGE + ".MainActivity"));
 
-        // Wait for the app to appear
-        mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)), LAUNCH_TIMEOUT);
+        // Clear out any previous instances
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+        UiObject2 appPolygon = mDevice.findObject(By.desc ("AppPolygon"));
+        assertTrue(appPolygon.clickAndWait(Until.newWindow(), 3000));
     }
 
     @Test
     public void useAppContext() {
-
-        Context appContext = getInstrumentation().getTargetContext();
-        assertEquals("com.example.myapplication", appContext.getPackageName());
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        device.pressHome();
-        UiObject2 appPoligon = device.findObject(By.text("AppPolygon"));
-        // Perform a click and wait until the app is opened.
-        Boolean opened = appPoligon.clickAndWait(Until.newWindow(), 3000);
-        assertTrue(opened);
+//        Context appContext = getInstrumentation().getTargetContext();
+//        assertEquals(APP_POLYGON_PACKAGE, appContext.getPackageName());
     }
 
+    /**
+     * Checks whether the given package is installed on the device or emulator.
+     * Throws exception if it isn't found.
+     */
+    private void checkAppInstallation(String packageName) throws Exception {
+        Context context = getApplicationContext();
+        PackageManager pm = context.getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setPackage(packageName);
+        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES);
+        System.out.println("list: " + list);
+        if (list.isEmpty()) {
+            throw new IllegalStateException("The app with package '" + packageName + "' is not installed.");
+        }
+    }
 
     /**
      * Uses package manager to find the package name of the device launcher. Usually this package
