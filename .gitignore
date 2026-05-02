@@ -59,4 +59,5 @@ app/out
 # properties with auth data
 application-local.properties
 app/src/test/resources/application.properties
+emptyapp/src/androidTest/resources/application.properties
 local.properties
