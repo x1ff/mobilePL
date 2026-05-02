@@ -1,11 +1,9 @@
 package com.example.myapplication.elements;
 
 import android.os.RemoteException;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiObject2;
-import androidx.test.uiautomator.UiDevice;
-import com.example.myapplication.devices.Device1;
+import com.example.myapplication.Device;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,18 +13,18 @@ import static org.junit.Assert.assertEquals;
  */
 public abstract class ElementsContainerWrapper {
     BySelector self;
-
+    protected static final long DEFAULT_TIMEOUT_MS = 5_000;
     public ElementsContainerWrapper(BySelector self)  {
         this.self = self;
     }
     public void assertText(String expectedText) {
-        UiObject2 object = Device1.getDevice().findObject(self);
+        UiObject2 object = Device.getDevice().findObject(self);
         assertEquals(expectedText, object.getText());
     }
 
     public void assertVisible() throws RemoteException {
-        UiObject2 object = Device1.getDevice().findObject(self);
-        Device1.getDevice().isScreenOn();
+        UiObject2 object = Device.getDevice().findObject(self);
+        Device.getDevice().isScreenOn();
         //TODO
     }
 
@@ -35,7 +33,7 @@ public abstract class ElementsContainerWrapper {
     }
 
     public String getText() {
-        return Device1.getDevice().findObject(self).getText();
+        return Device.getDevice().findObject(self).getText();
     }
 
     public boolean isDisplayed() {
@@ -43,6 +41,6 @@ public abstract class ElementsContainerWrapper {
     }
 
     public boolean isTextContains(String expected) {
-        return Device1.getDevice().findObject(self).getText().contains(expected);
+        return Device.getDevice().findObject(self).getText().contains(expected);
     }
 }

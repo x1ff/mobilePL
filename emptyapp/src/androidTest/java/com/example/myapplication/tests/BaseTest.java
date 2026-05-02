@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.tests;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,15 +9,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.Until;
-import com.example.myapplication.devices.Device1;
-import com.example.myapplication.modals.InfoAlertModal;
-import com.example.myapplication.robots.InfoAlertModalRobot;
-import com.example.myapplication.robots.LoginScreenRobot;
-import com.example.myapplication.screens.LoginScreen;
+import com.example.myapplication.Device;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
+import com.example.myapplication.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,37 +31,57 @@ import static org.junit.Assert.assertTrue;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExampleInstrumentedTest.class.getName());
+public class BaseTest {
+
     private static final String APP_POLYGON_PACKAGE = "com.example.apppolygon";
     private static final int LAUNCH_TIMEOUT = 5000;
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class.getName());
 
+    @Before
+    public void loadConfig() {
+        try {
+            Config.loadConfig("application.properties");
+            LOGGER.info("Конфигурация загружена!");
+        } catch (IllegalStateException e) {
+            LOGGER.error("Конфигурация не загружена");
+            throw new IllegalStateException("Ошибка при загрузке конфига");
+        }
+        Config.logConfig();
+    }
     @Before
     public void startMainActivityFromHomeScreen() throws Exception {
         // Initialize UiDevice instance
-        Device1.initDevice1();
+        Device.initDevice();
 
         // Start from the home screen
-        Device1.getDevice().pressHome();
+        Device.getDevice().pressHome();
 
         // Wait for launcher
         final String launcherPackage = getLauncherPackageName();
         System.out.println("LauncherPackageName " + launcherPackage);
         assertThat(launcherPackage, notNullValue());
-        Device1.getDevice().wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);
+        Device.getDevice().wait(Until.hasObject(
+                By.pkg(launcherPackage).depth(0)),
+                LAUNCH_TIMEOUT
+        );
 
         // Launch the blueprint app
-        Context context = getApplicationContext();
+        //Context context = getApplicationContext();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setPackage(APP_POLYGON_PACKAGE);
-        intent.setComponent(new ComponentName(APP_POLYGON_PACKAGE, APP_POLYGON_PACKAGE + ".MainActivity"));
+        intent.setComponent(
+                new ComponentName(
+                        APP_POLYGON_PACKAGE,
+                        APP_POLYGON_PACKAGE + ".MainActivity"
+                )
+        );
 
         // Clear out any previous instances
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        // context.startActivity(intent);
 
-        UiObject2 appPolygon = Device1.getDevice().findObject(By.desc ("AppPolygon"));
+        UiObject2 appPolygon = Device.getDevice().findObject(By.desc ("AppPolygon"));
         assertTrue(appPolygon.clickAndWait(Until.newWindow(), 3000));
     }
 
@@ -75,43 +91,13 @@ public class ExampleInstrumentedTest {
      */
     @After
     public void clearApp() throws IOException {
-        Device1.getDevice().executeShellCommand(String.format(
+        Device.getDevice().executeShellCommand(String.format(
                 "pm clear %s",
                 APP_POLYGON_PACKAGE
         ));
     }
 
-    @Test
-    public void loginTest() {
-        LOGGER.info("loginTest test start");
-        final String EXPECTED_TEXT = "Успешная авторизация!";
-        LoginScreen loginScreen = new LoginScreen();
-        new LoginScreenRobot(loginScreen)
-                .typeUserName("user@pflb.ru")
-                .typePassword("user")
-                .clickToLoginBtn();
-        InfoAlertModal infoAlertModal = new InfoAlertModal();
-        new InfoAlertModalRobot(infoAlertModal)
-                .checkMsgText(EXPECTED_TEXT)
-                .clickOkBtn();
-        LOGGER.info("loginTest end");
-    }
 
-    @Test
-    public void failTest() {
-        LOGGER.info("failTest test start");
-        final String EXPECTED_TEXT = "Успешная авторизация!";
-        LoginScreen loginScreen = new LoginScreen();
-        new LoginScreenRobot(loginScreen)
-                .typeUserName("inri inri")
-                .typePassword("abracadabra")
-                .clickToLoginBtn();
-        InfoAlertModal infoAlertModal = new InfoAlertModal();
-        new InfoAlertModalRobot(infoAlertModal)
-                .checkMsgText(EXPECTED_TEXT)
-                .clickOkBtn();
-        LOGGER.info("failTest end");
-    }
 
     /**
      * Checks whether the given package is installed on the device or emulator.

@@ -1,4 +1,4 @@
-package com.example.myapplication.devices;
+package com.example.myapplication;
 
 import androidx.test.uiautomator.UiDevice;
 import org.slf4j.Logger;
@@ -6,24 +6,21 @@ import org.slf4j.LoggerFactory;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
-public class Device1 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Device1.class.getName());
-    private static Device1 instance = null;
+public class Device {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Device.class.getName());
+    private static Device instance = null;
     private static UiDevice device;
-    private Device1() {
+    private Device() {
     }
-
-    public static Device1 getInstance() {
-        if (Device1.instance == null) {
-            Device1.instance = new Device1();
+    public static Device getInstance() {
+        if (Device.instance == null) {
+            Device.instance = new Device();
         }
         return instance;
     }
-
-    public static void initDevice1() {
+    public static void initDevice() {
         device = UiDevice.getInstance(getInstrumentation());
     }
-
 
     public static UiDevice getDevice() {
         return device;
