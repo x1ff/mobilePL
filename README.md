@@ -1,29 +1,36 @@
 # mobilePL
 PL MobileTesting IPR
 
-## Run a test using
+## Run Appium tests (Java application) JUint5 virtual devices
 1. Создайте в корене проэкта директорию apk и разместите в ней apk файл
 2. Создайте переменную окружения с именем  APK_DIR, укажите в ней абсолютный путь до директории
-3. Измените используя application-template.properties создайте application.properties, укажите верные логин, пароль
+3. Используя application-template.properties создайте application.properties, укажите верные логин, пароль
 4. Запустите сервер апиум
-
 ```appium```
-
 5. Запустите эмулятор и посмотрете udid
 
 ```adb devices```
 6. Измените udid в application.properties
 
 7. Чистим старое
-```gradle clean```
+```gradle :app:clean```
 8. Запускаем тесты
-   ```gradle test --rerun```
-9. Переходим в build директорию
-```cd app/build```
-10. Смотрим  allure report
-```allure serve```
+```gradle :app:test --rerun```
+9. Смотрим  allure report
+```allure serve app/build/allure-results```
 
-
+## Run UiAtomator2 tests (Android empty project) JUint4 real device
+1. Подключите устройство
+2. Добавьте устройство (Running devices -> Add Device)
+3. Используя application-template.properties создайте application.properties, укажите верные логин, пароль
+4. Установите приложение
+5. Чистим старое
+```gradle :emptyapp:clean```
+5. Запускаем тесты
+```gradle :emptyapp:connectedDebugAndroidTest```
+6. Смотрим  allure report
+```allure serve emptyapp/build/allure-results```
+7. 
 ## Appium inspector 
 ````
 {

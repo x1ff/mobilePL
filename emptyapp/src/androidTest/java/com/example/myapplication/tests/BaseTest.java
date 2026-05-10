@@ -10,6 +10,8 @@ import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.Until;
 import com.example.myapplication.Device;
+import io.qameta.allure.android.runners.AllureAndroidJUnit4;
+import io.qameta.allure.kotlin.junit4.AllureRunner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -30,8 +32,8 @@ import static org.junit.Assert.assertTrue;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(AndroidJUnit4.class)
-public class BaseTest {
+@RunWith(AllureAndroidJUnit4.class)
+public abstract class BaseTest {
 
     private static final String APP_POLYGON_PACKAGE = "com.example.apppolygon";
     private static final int LAUNCH_TIMEOUT = 5000;

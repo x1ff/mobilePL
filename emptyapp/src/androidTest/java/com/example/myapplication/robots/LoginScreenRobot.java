@@ -1,7 +1,7 @@
 package com.example.myapplication.robots;
 
 import com.example.myapplication.screens.LoginScreen;
-import io.qameta.allure.Step;
+import io.qameta.allure.kotlin.Step;
 
 
 public class LoginScreenRobot implements Robotic {
