@@ -31,6 +31,9 @@ android {
     packaging {
             resources.excludes.add("META-INF/INDEX.LIST")
     }
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
 
 }
 
@@ -53,11 +56,23 @@ dependencies {
     androidTestImplementation(libs.allure.kotlin.commons)
     androidTestImplementation(libs.allure.kotlin.android)
     //androidTestImplementation libs.junit.foundation
+    androidTestUtil("androidx.test:orchestrator:1.5.1")
+
+}
+def deviceAllureResultsDir = "/sdcard/googletest/test_outputfiles/."
+def localAllureResultsDir = project.layout.buildDirectory.dir("reports/allure-results").get().asFile
+
+
+tasks.register("cleanPulledAllureResults", Delete) {
+    delete(localAllureResultsDir)
 }
 
-//tasks.withType(Test).configureEach {
-////  debug true
-//    jvmArgs "-javaagent:${classpath.find { it.name.contains('junit-foundation') }.absolutePath}"
-//    // not required, but definitely useful
-//    testLogging.showStandardStreams = true
-//}
+tasks.register("pullAllureResults", Exec) {
+    dependsOn("cleanPulledAllureResults")
+    inputs.property("deviceAllureResultsDir", deviceAllureResultsDir)
+    outputs.dir(localAllureResultsDir)
+    doFirst {
+        localAllureResultsDir.mkdirs()
+    }
+    commandLine "adb", "pull", deviceAllureResultsDir, localAllureResultsDir.absolutePath
+}

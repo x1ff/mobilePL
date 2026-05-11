@@ -28,9 +28,11 @@ PL MobileTesting IPR
 ```gradle :emptyapp:clean```
 5. Запускаем тесты
 ```gradle :emptyapp:connectedDebugAndroidTest```
-6. Смотрим  allure report
+6. Копируем allure result с устройства
+```gradle :emptyapp:pullAllureResults```
+7. Смотрим  allure report
 ```allure serve emptyapp/build/allure-results```
-7. 
+
 ## Appium inspector 
 ````
 {
