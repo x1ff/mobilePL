@@ -60,7 +60,7 @@ dependencies {
 
 }
 def deviceAllureResultsDir = "/sdcard/googletest/test_outputfiles/."
-def localAllureResultsDir = project.layout.buildDirectory.dir("reports/allure-results").get().asFile
+def localAllureResultsDir = project.layout.buildDirectory.dir("reports").get().asFile
 
 
 tasks.register("cleanPulledAllureResults", Delete) {

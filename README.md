@@ -31,7 +31,7 @@ PL MobileTesting IPR
 6. Копируем allure result с устройства
 ```gradle :emptyapp:pullAllureResults```
 7. Смотрим  allure report
-```allure serve emptyapp/build/allure-results```
+```allure serve emptyapp/build/reports/allure-results```
 
 ## Appium inspector 
 ````
