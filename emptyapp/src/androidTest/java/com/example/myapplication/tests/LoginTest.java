@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     @DisplayName("Users. Пользователь \"user\". Авторизация с валидными значениями")
-    @TmsLink("https://allure.pflb.ru/project/1/test-cases/2336?treeId=7")
+    @TmsLink("2336")
     @Tag("#2336")
     public void userLoginTest() {
         LOGGER.info("loginTest test start");
@@ -38,7 +38,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     @DisplayName("Users. Пользователь \"user\". Авторизация с невалидным email")
-    @TmsLink("https://allure.pflb.ru/project/1/test-cases/2388?treeId=7")
+    @TmsLink("2388")
     @Tag("#2388")
     public void userlogOutTest() {
         LOGGER.info("Prep state by userLoginTest");
