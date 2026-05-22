@@ -4,6 +4,7 @@ import android.os.RemoteException;
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiObject2;
 import com.example.myapplication.Device;
+import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,7 +25,7 @@ public abstract class ElementsContainerWrapper {
 
     public void assertVisible() throws RemoteException {
         UiObject2 object = Device.getDevice().findObject(self);
-        Device.getDevice().isScreenOn();
+        Assert.assertTrue(Device.getDevice().isScreenOn());
         //TODO
     }
 
