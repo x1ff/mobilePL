@@ -14,7 +14,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "io.qameta.allure.android.runners.AllureAndroidJUnitRunner"
-        testInstrumentationRunnerArgument "allure.results.directory", "/sdcard/Download/allure-results"
+        //testInstrumentationRunnerArgument "allure.results.directory", "/sdcard/Download/allure-results"
     }
 
     buildTypes {
