@@ -12,6 +12,7 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.Until;
 import com.example.myapplication.Config;
 import com.example.myapplication.Device;
+import io.qameta.allure.android.rules.LogcatRule;
 import io.qameta.allure.android.rules.ScreenshotRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import org.junit.Before;
@@ -43,6 +44,8 @@ public abstract class BaseTest {
     @Rule
     public ScreenshotRule screenshotRule = new ScreenshotRule(ScreenshotRule.Mode.FAILURE, "ss_end");
 
+    @Rule
+    public LogcatRule logcatRule = new LogcatRule();
 
     @Before
     public void loadConfig() {
