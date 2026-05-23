@@ -5,17 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.Until;
-import com.example.myapplication.Device;
-import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.junit4.AllureRunner;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.runner.RunWith;
 import com.example.myapplication.Config;
+import com.example.myapplication.Device;
+import io.qameta.allure.android.rules.ScreenshotRule;
+import io.qameta.allure.android.runners.AllureAndroidJUnit4;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +40,10 @@ public abstract class BaseTest {
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class.getName());
 
+    @Rule
+    public ScreenshotRule screenshotRule = new ScreenshotRule(ScreenshotRule.Mode.FAILURE, "ss_end");
+
+
     @Before
     public void loadConfig() {
         try {
@@ -50,8 +55,13 @@ public abstract class BaseTest {
         }
         Config.logConfig();
     }
+
     @Before
     public void startMainActivityFromHomeScreen() throws Exception {
+
+        // clear before test
+        clearApp();
+
         // Initialize UiDevice instance
         Device.initDevice();
 
@@ -63,7 +73,7 @@ public abstract class BaseTest {
         System.out.println("LauncherPackageName " + launcherPackage);
         assertThat(launcherPackage, notNullValue());
         Device.getDevice().wait(Until.hasObject(
-                By.pkg(launcherPackage).depth(0)),
+                        By.pkg(launcherPackage).depth(0)),
                 LAUNCH_TIMEOUT
         );
 
@@ -83,22 +93,19 @@ public abstract class BaseTest {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         // context.startActivity(intent);
 
-        UiObject2 appPolygon = Device.getDevice().findObject(By.desc ("AppPolygon"));
+        UiObject2 appPolygon = Device.getDevice().findObject(By.desc("AppPolygon"));
         assertTrue(appPolygon.clickAndWait(Until.newWindow(), 3000));
+
     }
 
-    /**
-     * After Each
-     * @throws IOException
-     */
-    @After
+
     public void clearApp() throws IOException {
-        Device.getDevice().executeShellCommand(String.format(
-                "pm clear %s",
-                APP_POLYGON_PACKAGE
-        ));
+        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+                .executeShellCommand(String.format(
+                        "pm clear %s",
+                        APP_POLYGON_PACKAGE
+                ));
     }
-
 
 
     /**
