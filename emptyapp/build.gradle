@@ -61,6 +61,29 @@ dependencies {
 }
 def deviceAllureResultsDir = "/sdcard/googletest/test_outputfiles/."
 def localAllureResultsDir = project.layout.buildDirectory.dir("reports").get().asFile
+def getAdbExecutablePath = {
+    def androidSdkPath = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
+
+    if (!androidSdkPath) {
+        throw new GradleException(
+                "Не найдена переменная среды ANDROID_HOME. Укажите в ней путь к Android SDK."
+        )
+    }
+
+    def adbExecutableName = System.getProperty("os.name").toLowerCase().contains("windows")
+            ? "adb.exe"
+            : "adb"
+
+    def adbFile = file("${androidSdkPath}/platform-tools/${adbExecutableName}")
+
+    if (!adbFile.exists()) {
+        throw new GradleException(
+                "adb не найден по пути: ${adbFile.absolutePath}"
+        )
+    }
+
+    return adbFile.absolutePath
+}
 
 
 tasks.register("cleanPulledAllureResults", Delete) {
@@ -73,6 +96,12 @@ tasks.register("pullAllureResults", Exec) {
     outputs.dir(localAllureResultsDir)
     doFirst {
         localAllureResultsDir.mkdirs()
+        commandLine(
+                getAdbExecutablePath(),
+                "pull",
+                deviceAllureResultsDir,
+                localAllureResultsDir.absolutePath
+        )
+
     }
-    commandLine "adb", "pull", deviceAllureResultsDir, localAllureResultsDir.absolutePath
 }
