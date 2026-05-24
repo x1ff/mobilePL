@@ -12,6 +12,7 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.Until;
 import com.example.myapplication.Config;
 import com.example.myapplication.Device;
+import com.example.myapplication.ScreenRecordRule;
 import io.qameta.allure.android.rules.LogcatRule;
 import io.qameta.allure.android.rules.ScreenshotRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
@@ -41,11 +42,15 @@ public abstract class BaseTest {
     private static final int LAUNCH_TIMEOUT = 5000;
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class.getName());
 
-    @Rule
+    @Rule(order = 1)
     public ScreenshotRule screenshotRule = new ScreenshotRule(ScreenshotRule.Mode.FAILURE, "ss_end");
 
-    @Rule
+    @Rule(order = 0)
     public LogcatRule logcatRule = new LogcatRule();
+
+    @Rule(order = 2)
+    public ScreenRecordRule screenRecordRule = new ScreenRecordRule();
+
 
     @Before
     public void loadConfig() {
