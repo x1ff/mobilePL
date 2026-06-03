@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.UiAutomation;
 import android.os.ParcelFileDescriptor;
 import androidx.test.platform.app.InstrumentationRegistry;
+import io.qameta.allure.kotlin.junit4.Tag;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import java.io.ByteArrayOutputStream;
@@ -14,16 +15,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class ScreenRecordRule extends TestWatcher {
-
+    private static final String SCREEN_RECORD_DIR = "/sdcard/googletest/test_outputfiles/allure-results/";
     private final Shell shell = new Shell();
     private List<Integer> screenRecordProcessIds = Collections.emptyList();
+    String fileName;
 
+    /**
+     * Starts screen recording before the test execution begins.
+     *
+     * <p>The output file name is based on the current test method name.
+     * After launching the screenrecord command, the method stores process IDs
+     * of running screenrecord processes so they can be stopped later.</p>
+     *
+     * @param description JUnit description of the test that is about to start.
+     */
     @Override
     protected void starting(Description description) {
-        String fileName = "record_" + description.getMethodName() + ".mp4";
+        fileName = "record_" + description.getAnnotation(Tag.class).value() + ".mp4";
 
         shell.executeCommand(
-                "screenrecord /sdcard/" + fileName,
+                "screenrecord " + SCREEN_RECORD_DIR + fileName,
                 false
         );
 
@@ -45,6 +56,10 @@ public class ScreenRecordRule extends TestWatcher {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Screen record stopping was interrupted", e);
         }
+    }
+
+    private void attachVideoToAllure(String filePath) {
+        // TODO используй import io.qameta.allure.kotlin.Allure;
     }
     private static class Shell {
 

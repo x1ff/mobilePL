@@ -56,7 +56,8 @@ dependencies {
     androidTestImplementation(libs.allure.kotlin.commons)
     androidTestImplementation(libs.allure.kotlin.android)
     //androidTestImplementation libs.junit.foundation
-    androidTestUtil("androidx.test:orchestrator:1.5.1")
+    androidTestUtil(libs.androidx.orchestrator)
+    androidTestImplementation libs.androidx.runner
 
 }
 def deviceAllureResultsDir = "/sdcard/googletest/test_outputfiles/."

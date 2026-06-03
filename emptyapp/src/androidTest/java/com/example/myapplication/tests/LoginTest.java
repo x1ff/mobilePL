@@ -58,6 +58,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Tag("fail")
     public void failTest() {
         LOGGER.info("failTest test start");
         final String EXPECTED_TEXT = "Успешная авторизация!";

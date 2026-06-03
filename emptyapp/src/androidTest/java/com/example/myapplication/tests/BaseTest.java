@@ -15,6 +15,7 @@ import com.example.myapplication.Device;
 import com.example.myapplication.ScreenRecordRule;
 import io.qameta.allure.android.rules.LogcatRule;
 import io.qameta.allure.android.rules.ScreenshotRule;
+import io.qameta.allure.android.rules.WindowHierarchyRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,9 +49,11 @@ public abstract class BaseTest {
     @Rule(order = 0)
     public LogcatRule logcatRule = new LogcatRule();
 
-    @Rule(order = 2)
+    @Rule(order = 3)
     public ScreenRecordRule screenRecordRule = new ScreenRecordRule();
 
+    @Rule(order = 2)
+    public WindowHierarchyRule windowHierarchyRule = new WindowHierarchyRule();
 
     @Before
     public void loadConfig() {

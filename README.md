@@ -29,7 +29,7 @@ PL MobileTesting IPR
 5. Запускаем тесты
 ```gradle :emptyapp:connectedDebugAndroidTest```
 6. Копируем allure result с устройства
-```gradle :emptyapp:pullAllureResults```
+```gradle :emptyapp:pullAllureResults --no-configuration-cache```
 7. Смотрим  allure report
 ```allure serve emptyapp/build/reports/allure-results```
 
