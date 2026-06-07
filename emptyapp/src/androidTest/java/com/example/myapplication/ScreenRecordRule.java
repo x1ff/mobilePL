@@ -3,23 +3,22 @@ package com.example.myapplication;
 import android.app.UiAutomation;
 import android.os.ParcelFileDescriptor;
 import androidx.test.platform.app.InstrumentationRegistry;
-import io.qameta.allure.kotlin.junit4.Tag;
+import io.qameta.allure.kotlin.Allure;
+import io.qameta.allure.kotlin.model.Attachment;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ScreenRecordRule extends TestWatcher {
-    private static final String SCREEN_RECORD_DIR = "/sdcard/googletest/test_outputfiles/allure-results/";
+    private static final String SCREEN_RECORD_DIR = "sdcard" + File.separator +
+            "googletest" +  File.separator + "test_outputfiles" + File.separator  +
+            "allure-results";
     private final Shell shell = new Shell();
     private List<Integer> screenRecordProcessIds = Collections.emptyList();
-    String fileName;
-
+    private String videoFileName;
     /**
      * Starts screen recording before the test execution begins.
      *
@@ -31,10 +30,10 @@ public class ScreenRecordRule extends TestWatcher {
      */
     @Override
     protected void starting(Description description) {
-        fileName = "record_" + description.getAnnotation(Tag.class).value() + ".mp4";
+        videoFileName = "video-" + UUID.randomUUID().toString() + ".mp4";
 
         shell.executeCommand(
-                "screenrecord " + SCREEN_RECORD_DIR + fileName,
+                "screenrecord " + SCREEN_RECORD_DIR + File.separator + videoFileName,
                 false
         );
 
@@ -56,13 +55,23 @@ public class ScreenRecordRule extends TestWatcher {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Screen record stopping was interrupted", e);
         }
+        try {
+            attachVideoToAllure(videoFileName);
+        } catch (FileNotFoundException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void attachVideoToAllure(String filePath) {
-        // TODO используй import io.qameta.allure.kotlin.Allure;
+    private void attachVideoToAllure(String fileName) throws FileNotFoundException, InterruptedException {
+        Thread.sleep(2000);
+        Allure.getLifecycle().getCurrentTestCaseOrStep();
+        final Attachment attachment = new Attachment(fileName,"video", "video/mp4");
+        Allure.getLifecycle().updateTestCase(result -> {
+            result.getAttachments().add(attachment);
+            return null;
+        });
     }
     private static class Shell {
-
         private final UiAutomation uiAutomation =
                 InstrumentationRegistry.getInstrumentation().getUiAutomation();
 
@@ -116,7 +125,7 @@ public class ScreenRecordRule extends TestWatcher {
                 buffer.write(data, 0, bytesRead);
             }
 
-            return buffer.toString(Charset.defaultCharset().name());
+            return buffer.toString(Charset.defaultCharset());
         }
     }
 }

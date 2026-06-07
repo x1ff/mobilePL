@@ -1,7 +1,10 @@
 plugins {
     id 'com.android.application'
+    id 'io.qameta.allure' version '4.0.2'
 }
-
+allure {
+    version = '2.20.0' // версия Allure, совместимая с плагином
+}
 android {
     namespace 'com.example.myapplication'
     compileSdk 33
@@ -43,6 +46,7 @@ dependencies {
     implementation libs.material
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
+    implementation libs.androidx.monitor
     testImplementation libs.junit4
     testImplementation libs.allure.junit4
     androidTestImplementation libs.junit4
@@ -58,6 +62,11 @@ dependencies {
     //androidTestImplementation libs.junit.foundation
     androidTestUtil(libs.androidx.orchestrator)
     androidTestImplementation libs.androidx.runner
+    androidTestImplementation(libs.androidx.monitor)
+    androidTestImplementation libs.androidx.core
+    // Adds platform testing infrastructure
+    androidTestImplementation libs.androidx.storage
+    androidTestImplementation libs.androidx.test.services
 
 }
 def deviceAllureResultsDir = "/sdcard/googletest/test_outputfiles/."
@@ -92,6 +101,7 @@ tasks.register("cleanPulledAllureResults", Delete) {
 }
 
 tasks.register("pullAllureResults", Exec) {
+    notCompatibleWithConfigurationCache("BUILD FAILED");
     dependsOn("cleanPulledAllureResults")
     inputs.property("deviceAllureResultsDir", deviceAllureResultsDir)
     outputs.dir(localAllureResultsDir)
