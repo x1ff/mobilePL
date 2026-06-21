@@ -19,7 +19,6 @@ public class LoginScreenRobot implements Robotic {
      */
     public LoginScreenRobot typeUserName(String name) {
         Allure.step("Ввести имя пользователя " + name, s -> {
-            s.parameter("name", name);
             loginScreen.getUserNameInput().type(name);
             return null;
         });
@@ -28,7 +27,6 @@ public class LoginScreenRobot implements Robotic {
 
     public LoginScreenRobot typePassword(String password) {
         Allure.step("Ввести пароль", s -> {
-            s.parameter("password", password);
             loginScreen.getPasswordInput().type(password);
             return null;
         });
