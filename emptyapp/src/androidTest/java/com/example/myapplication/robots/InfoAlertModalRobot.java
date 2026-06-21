@@ -1,7 +1,7 @@
 package com.example.myapplication.robots;
 
 import com.example.myapplication.modals.InfoAlertModal;
-import io.qameta.allure.kotlin.Step;
+import io.qameta.allure.kotlin.Allure;
 
 
 public class InfoAlertModalRobot implements Robotic {
@@ -10,26 +10,33 @@ public class InfoAlertModalRobot implements Robotic {
     public InfoAlertModalRobot(InfoAlertModal infoAlertModal) {
         this.infoAlertModal =  infoAlertModal;
     }
-    @Step("Проверить текст сообщения {expectedMsg}")
+
     public InfoAlertModalRobot checkMsgText(String expectedMsg) {
-        infoAlertModal.getMsgText().assertText(expectedMsg);
+        Allure.step("Проверить текст сообщения " +  expectedMsg, s -> {
+            s.parameter("expectedMsg", expectedMsg);
+            infoAlertModal.getMsgText().assertText(expectedMsg);
+            return null;
+        });
         return this;
     }
 
-    @Step("Кликнуть ОК")
     public InfoAlertModalRobot clickOkBtn() {
-        infoAlertModal.getOkBtn().click();
+        Allure.step("Кликнуть ОК",s -> {
+            infoAlertModal.getOkBtn().click();
+            return null;
+        });
         return this;
     }
 
-    @Step("Проверить исчезновение")
     public InfoAlertModalRobot checkDisappear() {
-        infoAlertModal.getOkBtn().assertDissapear();
-        infoAlertModal.getMsgText().assertDissapear();
+        Allure.step("Проверить исчезновение", s -> {
+            infoAlertModal.getOkBtn().assertDissapear();
+            infoAlertModal.getMsgText().assertDissapear();
+            return null;
+        });
         return this;
     }
 
-    @Step("Проверить, что открыт экран")
     @Override
     public InfoAlertModalRobot assertVisibleElements() {
 //        infoAlertModal.assertVisibleElements();

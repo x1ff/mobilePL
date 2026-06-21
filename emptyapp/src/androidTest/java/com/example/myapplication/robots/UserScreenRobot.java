@@ -1,8 +1,7 @@
 package com.example.myapplication.robots;
 
 import com.example.myapplication.screens.UsersScreen;
-import io.qameta.allure.kotlin.Step;
-
+import io.qameta.allure.kotlin.Allure;
 
 public class UserScreenRobot implements Robotic {
     UsersScreen usersScreen;
@@ -11,12 +10,14 @@ public class UserScreenRobot implements Robotic {
         this.usersScreen = screen;
     }
 
-    @Step("Кликнуть на 3 точки")
     public UserScreenRobot threePointsBtnClick() {
-        usersScreen.getThreePointsBtn().click();
+        Allure.step("Кликнуть на 3 точки", s -> {
+            usersScreen.getThreePointsBtn().click();
+            return null;
+        });
         return this;
     }
-    @Step("Проверить, что открыт экран")
+
     @Override
     public UserScreenRobot assertVisibleElements() {
         // usersScreen.assertVisibleElements();

@@ -1,50 +1,65 @@
 package com.example.myapplication.robots;
 
 import com.example.myapplication.screens.LoginScreen;
-import io.qameta.allure.kotlin.Step;
+import io.qameta.allure.kotlin.Allure;
 
 
 public class LoginScreenRobot implements Robotic {
     LoginScreen loginScreen;
+
     public LoginScreenRobot(LoginScreen screen) {
         this.loginScreen = screen;
     }
 
     /**
      * Ввести имя пользователя
+     *
      * @param name
      * @return
      */
-    @Step("Ввести имя пользователя {name}")
     public LoginScreenRobot typeUserName(String name) {
-        loginScreen.getUserNameInput().type(name);
+        Allure.step("Ввести имя пользователя " + name, s -> {
+            s.parameter("name", name);
+            loginScreen.getUserNameInput().type(name);
+            return null;
+        });
         return this;
     }
 
-    @Step("Ввести пароль")
     public LoginScreenRobot typePassword(String password) {
-        loginScreen.getPasswordInput().type(password);
+        Allure.step("Ввести пароль", s -> {
+            s.parameter("password", password);
+            loginScreen.getPasswordInput().type(password);
+            return null;
+        });
         return this;
     }
 
-    @Step("Кликаем на кнопку логин")
     public void clickToLoginBtn() {
-        loginScreen.getLoginBtn().click();
+        Allure.step("Кликаем на кнопку логин", s -> {
+            loginScreen.getLoginBtn().click();
+            return null;
+        });
     }
 
-    @Step("Проверить текст у кнопки логин")
     public LoginScreenRobot assertLoginBtnText(String expectedText) {
-        loginScreen.getLoginBtn().assertText(expectedText);
+        Allure.step("Проверить текст у кнопки логин", s -> {
+            s.parameter("expectedText", expectedText);
+            loginScreen.getLoginBtn().assertText(expectedText);
+            return null;
+        });
         return this;
     }
 
-    @Step("Проверить текст у кнопки логин")
-    public LoginScreenRobot checkLoginBtnText(String expected) {
-        loginScreen.getLoginBtn().assertText(expected);
+    public LoginScreenRobot checkLoginBtnText(String expectedText) {
+        Allure.step("Проверить текст у кнопки логин", s -> {
+            s.parameter("expectedText", expectedText);
+            loginScreen.getLoginBtn().assertText(expectedText);
+            return null;
+        });
         return this;
     }
 
-    @Step("Проверить, что открыт экран")
     @Override
     public LoginScreenRobot assertVisibleElements() {
 //        loginScreen.assertVisibleElements();
