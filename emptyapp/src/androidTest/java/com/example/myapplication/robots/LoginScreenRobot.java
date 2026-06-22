@@ -33,11 +33,12 @@ public class LoginScreenRobot implements Robotic {
         return this;
     }
 
-    public void clickToLoginBtn() {
+    public LoginScreenRobot clickToLoginBtn() {
         Allure.step("Кликаем на кнопку логин", s -> {
             loginScreen.getLoginBtn().click();
             return null;
         });
+        return this;
     }
 
     public LoginScreenRobot assertLoginBtnText(String expectedText) {
@@ -60,7 +61,9 @@ public class LoginScreenRobot implements Robotic {
 
     @Override
     public LoginScreenRobot assertVisibleElements() {
-//        loginScreen.assertVisibleElements();
+        loginScreen.getLoginBtn().assertVisible();
+        loginScreen.getPasswordInput().assertVisible();
+        loginScreen.getUserNameInput().assertVisible();
         return this;
     }
 }

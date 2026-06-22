@@ -11,7 +11,9 @@ public class Config {
     private static final Logger LOGGER = LoggerFactory.getLogger(Config.class.getName());
     private static Config instance = null;
     private static String userLogin;
+    private static String adminLogin;
     private static String userPass;
+    private static String adminPass;
 
     private Config() {
     }
@@ -22,6 +24,7 @@ public class Config {
         }
         return instance;
     }
+
     public static void loadConfig(String fileName) throws IllegalStateException {
         // apkDir = System.getenv("APK_DIR");
         Properties prop = new Properties();
@@ -29,6 +32,8 @@ public class Config {
             prop.load(inputStream);
             userLogin = prop.getProperty("userLogin");
             userPass = prop.getProperty("userPassword");
+            adminLogin = prop.getProperty("adminLogin");
+            adminPass = prop.getProperty("adminPassword");
         } catch (IOException | RuntimeException e) {
             LOGGER.error("Ошибка при загрузке конфига {}", e.getMessage());
             throw new IllegalStateException("Ошибка при загрузке конфига");
@@ -38,13 +43,20 @@ public class Config {
     public static void logConfig() {
         LOGGER.info("userLogin: {}", userLogin);
         LOGGER.info("userPassword: {}", userPass);
+        LOGGER.info("adminLogin: {}", adminLogin);
+        LOGGER.info("adminPassword: {}", adminPass);
     }
 
     public static String getUserLogin() {
         return userLogin;
     }
-
     public static String getUserPass() {
         return userPass;
+    }
+    public static String getAdminLogin() {
+        return adminLogin;
+    }
+    public static String getAdminPass() {
+        return adminPass;
     }
 }

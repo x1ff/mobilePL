@@ -20,7 +20,7 @@ public class UserScreenRobot implements Robotic {
 
     @Override
     public UserScreenRobot assertVisibleElements() {
-        // usersScreen.assertVisibleElements();
+        usersScreen.getThreePointsBtn().assertVisible();
         return this;
     }
 }

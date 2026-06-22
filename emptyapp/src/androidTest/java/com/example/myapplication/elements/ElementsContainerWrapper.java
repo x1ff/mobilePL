@@ -23,10 +23,8 @@ public abstract class ElementsContainerWrapper {
         assertEquals(expectedText, object.getText());
     }
 
-    public void assertVisible() throws RemoteException {
-        UiObject2 object = Device.getDevice().findObject(self);
-        Assert.assertTrue(Device.getDevice().isScreenOn());
-        //TODO
+    public void assertVisible() {
+        Assert.assertNotNull(Device.getDevice().findObject(self));
     }
 
     public void assertDissapear() {
