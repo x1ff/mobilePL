@@ -36,12 +36,12 @@ dependencies {
     agent libs.aspectJWeaver
     // This dependency is used by the application.
     implementation libs.guava
-    implementation libs.annotation.jvm
+    implementation libs.androidx.annotation.jvm
     // Import allure-bom to ensure correct versions of all the dependencies are used
     testImplementation platform(libs.allure)
     // Add necessary Allure dependencies to dependencies section
     testImplementation libs.allureJunit5
-    testImplementation platform(libs.junitBom)
+    testImplementation platform(libs.junit5Bom)
     testImplementation libs.jupiterApi
     testRuntimeOnly libs.jupiterEngine
     implementation libs.javaClient
@@ -50,7 +50,7 @@ dependencies {
     implementation libs.selenideAppium
     // https://allurereport.org/docs/guides/junit5-selenide-screenshots/
     testImplementation libs.allureSelenide
-    testAnnotationProcessor(libs.allureDescriptionsJavadoc)
+    testAnnotationProcessor(libs.allureJunit5DescriptionsJavadoc)
     runtimeOnly(libs.aspectJWeaver)
 }
 

@@ -1,0 +1,118 @@
+plugins {
+    id 'com.android.application'
+    id 'io.qameta.allure' version '4.0.2'
+}
+allure {
+    version = '2.20.0' // версия Allure, совместимая с плагином
+}
+android {
+    namespace 'com.example.myapplication'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "io.qameta.allure.android.runners.AllureAndroidJUnitRunner"
+        //testInstrumentationRunnerArgument "allure.results.directory", "/sdcard/Download/allure-results"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    packaging {
+            resources.excludes.add("META-INF/INDEX.LIST")
+    }
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+}
+
+dependencies {
+    implementation libs.junit.foundation
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.monitor
+    testImplementation libs.junit4
+    testImplementation libs.allure.junit4
+    androidTestImplementation libs.junit4
+    androidTestImplementation libs.allure.junit4
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation libs.androidx.uiautomator
+
+    androidTestImplementation(libs.allure.kotlin.junit4)
+    androidTestImplementation(libs.allure.kotlin.model)
+    androidTestImplementation(libs.allure.kotlin.commons)
+    androidTestImplementation(libs.allure.kotlin.android)
+    //androidTestImplementation libs.junit.foundation
+    androidTestUtil(libs.androidx.orchestrator)
+    androidTestImplementation libs.androidx.runner
+    androidTestImplementation(libs.androidx.monitor)
+    androidTestImplementation libs.androidx.core
+    // Adds platform testing infrastructure
+    androidTestImplementation libs.androidx.storage
+    androidTestImplementation libs.androidx.test.services
+
+}
+def deviceAllureResultsDir = "/sdcard/googletest/test_outputfiles/."
+def localAllureResultsDir = project.layout.buildDirectory.dir("reports").get().asFile
+def getAdbExecutablePath = {
+    def androidSdkPath = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
+
+    if (!androidSdkPath) {
+        throw new GradleException(
+                "Не найдена переменная среды ANDROID_HOME. Укажите в ней путь к Android SDK."
+        )
+    }
+
+    def adbExecutableName = System.getProperty("os.name").toLowerCase().contains("windows")
+            ? "adb.exe"
+            : "adb"
+
+    def adbFile = file("${androidSdkPath}/platform-tools/${adbExecutableName}")
+
+    if (!adbFile.exists()) {
+        throw new GradleException(
+                "adb не найден по пути: ${adbFile.absolutePath}"
+        )
+    }
+
+    return adbFile.absolutePath
+}
+
+
+tasks.register("cleanPulledAllureResults", Delete) {
+    delete(localAllureResultsDir)
+}
+
+tasks.register("pullAllureResults", Exec) {
+    notCompatibleWithConfigurationCache("BUILD FAILED");
+    dependsOn("cleanPulledAllureResults")
+    inputs.property("deviceAllureResultsDir", deviceAllureResultsDir)
+    outputs.dir(localAllureResultsDir)
+    doFirst {
+        localAllureResultsDir.mkdirs()
+        commandLine(
+                getAdbExecutablePath(),
+                "pull",
+                deviceAllureResultsDir,
+                localAllureResultsDir.absolutePath
+        )
+
+    }
+}
